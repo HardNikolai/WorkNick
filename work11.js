@@ -8,6 +8,7 @@ for (let firstNum = 1; firstNum < 10; firstNum++) {
     for (let secondNum = 1; secondNum < 10; secondNum++) {
         result = `${firstNum} * ${secondNum} = ${firstNum * secondNum}`
         array2.push(result)
+        console.log(result)
     }
     array1.push(array2)
 }
