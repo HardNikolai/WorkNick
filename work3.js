@@ -1,22 +1,25 @@
-let mass1 = ['a', 'b', 'c', 'd', 'e', 'f']
+/*Написать функцию, принимающую массив строк и выводящих их на экран,
+используя цикл while. Элементы из массива извлекать с помощью оператора .pop()*/
 
-console.log(mass1)
+let array1 = ['a', 'b', 'c', 'd', 'e', 'f']
 
-function getWord(array) {
-    array.reverse()
+console.log(array1)
 
-    let mass1Len = array.length
+function getWord(arr) {
+    arr.reverse()
+
+    let mass1Len = arr.length
     let i = 0
-    let mass2 = []
-    let mass3 = []
+    let array2 = []
+    let array3 = []
     
     while (i < mass1Len) {
-        mass2 = mass1.pop(i)
-        mass3 += mass2
+        array2 = array1.pop(i)
+        array3 += array2
         i++
     }
     
-    return mass3
+    return array3
 }
 
-console.log(getWord(mass1))
+console.log(getWord(array1))
