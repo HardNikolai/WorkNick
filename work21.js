@@ -26,7 +26,6 @@ function strObj(object) {
         } else {
             result += object[key]
         }
-        
     }
 
     console.log(result)
