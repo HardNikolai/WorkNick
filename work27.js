@@ -1,28 +1,60 @@
-/*Имеется двумерный массив. 
-Пользуясь возможностями 
-ES6 синтаксиса объединить его в одномерный массив.
+/*Имеется объект пользователя следующего вида
 
-Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-
-
-
-Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]*/
-
-
-const array1 = [
-    [1, 2, 3], 
-    [4, 5, 6], 
-    [7, 8, 9]
-]
-
-
-const array2 = []
-
-for (let i = 0; i < array1.length; i++) {
-
-    for (let n = 0; n < array1[i].length; n ++) {
-        array2.push(array1[i][n])
-    }
+const user = {
+ id: 123,
+ first_name: ‘Ivan’,
+ last_name: ‘Ivanov’,
+ password: ‘Mypwd!23’,
+ age: 13
 }
 
-console.log(array2)
+Также имеется объект с измененными полями:
+
+const changed = { age: 15,
+    password: ‘new password }
+
+Написать функцию, 
+принимающую на вход исходный объект
+и объект с измененными параметрами 
+и возвращающая обновленный исходный объект.
+(В объекте и changed могут быть любые поля
+из user в любом количестве). 
+Для приведённого выше примера результат должен быть следующий:
+
+{
+ id: 123,
+ first_name: ‘Ivan’,
+ last_name: ‘Ivanov’,
+ password: ’new password’,
+ age: 15
+}*/
+
+const user = {
+    id: 123,
+    first_name: 'Ivan',
+    last_name: 'Ivanov',
+    password: 'Mypwd!23',
+    age: 13
+   }
+
+const changed = { 
+    age: 15,
+    password: 'new password' 
+}
+
+function newObj(obj1, obj2) {
+    for (key2 in obj2) {
+       
+        for (key1 in obj1) {
+
+            if (key2 === key1) {
+                obj1[key1] = obj2[key2]
+            }
+        }
+    }
+    console.log(obj1)
+    
+    return obj1
+}
+
+newObj(user, changed)
