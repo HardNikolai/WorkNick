@@ -10,9 +10,7 @@ for (let firstNum = 0; firstNum < 101; firstNum++) {
     result = `${firstNum}^${firstNum} = ${firstNum * firstNum}`
     
     array2.push(result)
-    
     array1.push(array2)
-    console.log(result)
 }
 
-console.log(array1)
+console.table(array1)
