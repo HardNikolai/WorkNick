@@ -26,7 +26,7 @@ function db_user(mail) {
         if (mail[i] === '@' && num1 === 0) {
             num1 = i
             username = mail.slice(0, num1)
-            domain = mail.slice(num1+1)
+            domain = mail.slice(num1 + 1)
         }
     }
      container['username'] = username
