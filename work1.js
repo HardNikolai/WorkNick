@@ -36,4 +36,4 @@ const array2 = array1.map(item => {
     return container
 })
 
-console.log(array2)
+console.log(array2) 
