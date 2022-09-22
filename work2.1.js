@@ -21,6 +21,6 @@ if (string1.length > string2.length) {
         }
     }
 }
-
+ 
 console.log(res_str)
  
