@@ -19,12 +19,12 @@ const b = { test: 8, text: 9 }
 function comparison(obj1, obj2) {
     let len_obj = 0
 
-    for (key in obj1){
-        
-        for (k in obj2){
-            
-            if (obj1[key] === obj2[k] && key === k){
-                
+    for (let key of Object.keys(obj1)) {
+
+        for (let k of Object.keys(obj2)) {
+
+            if (obj1[key] === obj2[k] && key === k) {
+
                 return true
             }
         }
