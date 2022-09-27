@@ -30,19 +30,7 @@ for (let i = 0; i < str1.length; i++) {
     }
 }
 
+res.sort()
 
-for (let j = res.length - 1; j > 0; j--) {
-        
-    for (let i = 0; i < j; i++) {
-        
-        if (res[i] > res[i + 1]) {
-            let temp = res[i]
-
-            res[i] = res[i + 1]
-            res[i + 1] = temp
-
-        }
-    }
-}
 
 console.log(res)
