@@ -76,6 +76,7 @@ function sortArray(arr, element_sort, parametr_sort) {
   }
 
   console.log(res1)
+  return res1
 
 }
 
