@@ -18,18 +18,20 @@ for (let i = 0; i < array2.length; i++) {
     for (let j = 0; j < array1.length; j++) {
 
         if (array2[i] === j) {
-            console.log(array2[i], j)
             array1[j] = ''            
-        } 
+        }
+        
     }
-}
 
+    if (i === array2.length - 1) {
+        for (let i = 0; i < array1.length; i++) {
 
-for (let i = 0; i < array1.length; i++) {
+            if (typeof(array1[i]) === typeof(1)) {
 
-    if (typeof(array1[i]) === typeof(1)) {
+                res_arr.push(array1[i])
+            }
+        }
 
-        res_arr.push(array1[i])
     }
 }
 
