@@ -23,10 +23,20 @@ function checkStr(str) {
 
     for (let i = str.length - 1; i >= 0; i--) {
         res_str += str[i]
-    }
 
-    console.log(str === res_str)
-    return str === res_str
+        if (str.length === res_str.length) {
+
+            if (str === res_str) {
+                console.log(str === res_str)
+
+                return true
+            } else {
+                console.log(str === res_str)
+                
+                return false
+            }
+        }
+    }
 }
 
 checkStr(string1)
