@@ -29,8 +29,8 @@ function mulParam (obj) {
     let new_obj = {}
 
     for (key in obj) {
-
-        if (typeof(obj[key]) === typeof(0)) {
+        
+        if (typeof(obj[key]) === 'number') {
 
             new_obj[key] = obj[key] * 2
         } else {
