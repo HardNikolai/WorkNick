@@ -32,7 +32,7 @@ function range(num1, num2, num3) {
 
         return result
 
-    } else if (typeof(num3) === typeof(0)) {
+    } else if (typeof(num3) === 'number') {
         let check_num = 1
         let new_num = 1
 
