@@ -14,20 +14,18 @@ const animal_obj = {
 
 
 function arrayFromObj(obj) {
-    let res = []
+    let res_arr = []
 
-    for (key in obj) {
+    for(let key of Object.keys(obj)) {
         let arr = []
 
         arr.push(key)
         arr.push(obj[key])
-
-        res.push(arr)
+        res_arr.push(arr)
     }
 
-    console.log(res)
-    
-    return res
+
+    console.log(res_arr)
 }
 
 
