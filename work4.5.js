@@ -14,6 +14,7 @@ const array1 = [5, 8, 2, 4, 5, 4, 2, 4, 2, 5, 2, 4, 5]
 
 function negaticNum(arr) {
     let num = 0
+    let res 
 
     for (let i = 0; i < arr.length; i++) {
 
@@ -26,8 +27,7 @@ function negaticNum(arr) {
             if (n + 1 === arr.length) {
                 
                 if (num === 1) {
-
-                    console.log(arr[i])
+                    res = arr[i]
                     num = 0
 
                 } else {
@@ -38,6 +38,8 @@ function negaticNum(arr) {
             }
         }
     }
+    console.log(res)
+    return res
 }
 
 
