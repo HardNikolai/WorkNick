@@ -123,6 +123,8 @@ function obgString(str) {
         }
     }
     console.log(res_obj)
+
+    return res_obj
 }
 
 
