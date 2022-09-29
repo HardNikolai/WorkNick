@@ -18,52 +18,37 @@ const array1 = [4, 7, 1, 9, 6, 8, 4, 6, 3, 6]
 const array2 = ["text", "education", "part", "Text"]
 
 
-function removeDuplicates(array) {
-    let obj = {}
-    let result = [];
-    let num = 0
+function removeDuplicates(arr) {
+    let array = arr
 
-    for (let i = 0; i < array.length; i++) {
-        
-        if (typeof(array[i]) === typeof(0)) {
-            num += 1
+    for (let i = 0; i < arr.length; i++) {
 
-            if (num === array.length) {
-                for (let i = 0; i < array.length; i++) {
-                    let str = array[i]
+        let first_el = arr[i]
 
-                    obj[str] = str
-                }
-    
-                for (i in obj) {
-                    let int = Number(i)
+        for (let n = i + 1; n < arr.length; n++) {
 
-                    result.push(int)
-                }
-    
-                console.log(result)
-                return result
-            }
-        } else if (typeof(array[i]) === typeof('a')) {
-            num += 1
+            let second_el = arr[n]
 
-            if (num === array.length) {
+            if (typeof(first_el) === 'string') {
+                first_el = first_el.toLowerCase()
+                second_el = second_el.toLowerCase()
 
-                for (let i = 0; i < array.length; i++) {
-                    let str = array[i].toLowerCase()
+                if (first_el === second_el) {
 
-                    obj[str] = str
+                    array.splice(n, 1)
                 }
                 
-                for (key in obj) {
-                    result.push(key)
-                }
+            }
 
-                console.log(result)
-                return result
+            if (first_el === second_el) {
+
+                array.splice(n, 1)
             }
         }
     }
+
+    console.log(array)
+    return array
 }
 
 removeDuplicates(array1)
