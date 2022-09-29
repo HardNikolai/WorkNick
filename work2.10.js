@@ -20,16 +20,18 @@ for (let i = 0; i < array1.length; i++) {
     for (let n = 0; n < array2.length; n++) {
 
         if (array1[i] === array2[n]) {
+
             num = 0
             break
-        } else {
-            num += 1
-            
-            if (num === array2.length) {
+
+        }
+
+        num += 1
+        
+        if (num === array2.length) {
                 result.push(array1[i])
                 num = 0
             }
-        }
     }
 }
 
