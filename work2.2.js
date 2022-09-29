@@ -19,47 +19,42 @@ const array3 = [6, 3, 2, 8, 1]
 
 
 function checkArray(...arr) {
-    let lst = []
     let res = []
-    let num = 0
-
-    console.log(arr)
+    let num = 1
 
     for (let i = 0; i < arr[0].length; i++) {
-
-        for (let n = 0; n < arr[1].length; n++) {
-            if (arr[0][i] === arr[1][n]) {
-                lst.push(arr[0][i])
-                num += 1
-            }
-        }
-    
-            if (num === 1) {
+        
+        for (let n = 1; n < arr.length; n++) {
             
-                for (let j = 0; j < arr[2].length; j++) {
-                
-                    if (arr[0][i] === arr[2][j]) {
-                        lst.push(arr[0][i])
+            for (let j = 0; j < arr[n].length; j++) {
+    
+                if (arr[0][i] === arr[n][j]) {
+
+                    num += 1
+
+                }
+
+                if (n === arr.length - 1 && j === arr[n].length - 1) {
+                    
+                    if (num === arr.length) {
+
+                        res.push(arr[0][i])
+                        num = 1
+
+                    } else {
+
+                        num = 1
+
                     }
                 }
-                num = 0
             }
-    }
-
-    console.log(lst)
-
-    for (let l = 0; l < lst.length; l++) {   
-
-        if (lst[l] != lst[l+1] && lst[l] != lst.length) {
-            res.push(lst[l])
         }
-    
     }
-
     console.log(res)
+  
     return res
 }
 
 
 checkArray(array1, array2, array3)
-
+checkArray([1], [1,2], [1, 4], [3,4])
