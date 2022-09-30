@@ -1,0 +1,51 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.circle {
+    height: 200px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.first_circle {
+    height: 200px;
+    width: 200px;
+    background: linear-gradient(to left, #a2cb92 50%, #d5e5c0 50%);
+    border-radius: 100%;
+    transform: rotate(220deg);
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.second_circle{
+    height: 200px;
+    width: 200px;
+    background: linear-gradient(to left, #a2cb92 50%, rgb(213 229 192 / 0%) 10%);
+    border-radius: 100%;
+    transform: rotate(270deg);
+    display: flex;
+    align-items: center;
+}
+
+.third_circle{
+    height: 135px;
+    width: 135px;
+    display: flex;
+    text-align: center;
+    background: #eef5e6;
+    border-radius: 100%;
+    margin: 0 auto;
+}
+
+.indicator {
+    font-size: 300%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+    transform: rotate(230deg);
+}
