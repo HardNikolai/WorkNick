@@ -1,0 +1,55 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.image_circle {
+    height: 100px;
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle_green {
+    height: 95px;
+    width: 95px;
+    border-radius: 50%;
+    background-color: lightgreen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 60px;
+}
+
+.circle_purple {
+    height: 95px;
+    width: 95px;
+    border-radius: 50%;
+    background-color: purple;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 60px;
+}
+
+.circle_grey {
+    height: 95px;
+    width: 95px;
+    border-radius: 50%;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 60px;
+}
+
+.stick {
+    height: 5px;
+    width: 80px;
+    background-color: lightgray;
+}
