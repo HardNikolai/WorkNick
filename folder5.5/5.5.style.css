@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.comment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3%;
+    width: 12%;
+    border: 1px solid black;
+}
+
+.comment:hover {
+    background: linear-gradient(#fcfef4, #eaebd3);
+    cursor: pointer;
+    color: red;
+}
