@@ -8,8 +8,6 @@ Output: ["2", "part", "test", "education", "exceed.team"]*/
 
 
 function sortStr(arr) {
-    let res = []
-    let len_str = 0
     
     for (let i = 0; i < arr.length - 1; i++) {
 
