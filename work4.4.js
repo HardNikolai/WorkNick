@@ -7,15 +7,19 @@ Input: [ [1, 2, 3], [4, 5], [6] ]
 
 Output: 21*/
 
-const array1 = [ [1, 2, 3], [4, 5], [6] ]
+const array1 = [[1, 2, 3], [4, 5], [6]]
 
-let res = 0
 
-for (let i = 0; i < array1.length; i++) {
-    
-    for (let n = 0; n < array1[i].length; n++) {
-        res += array1[i][n]
+function sumEl(arr) {
+    let res = 0
+
+    for (let i = 0; i < arr.length; i++) {
+
+        for (let n = 0; n < arr[i].length; n++) {
+            res += arr[i][n]
+        }
     }
+    return res
 }
 
-console.log(res)
+console.log(sumEl(array1))
