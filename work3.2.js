@@ -22,8 +22,8 @@ const string2 = "text"
 
 
 function strDefinition(str) {
+    let res = ''
     if (str.length > 5) {
-        let res = ''
 
         for (let i = 0; i < 3; i++) {
             
@@ -35,21 +35,17 @@ function strDefinition(str) {
             res+= str[i]
         }
 
-        console.log(res)
-
-        return res
 
     }else{
-        let res = ''
 
         for (let i = 0; i < str.length; i++) {
             res += str[0]
         }
-        
-        console.log(res)
-
-        return res
     }
+
+    console.log(res)
+
+    return res
 } 
 
 
