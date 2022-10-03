@@ -23,7 +23,6 @@ const array1 = [
 
 
 function sortArray(arr, element_sort, parametr_sort) {
-    let res = []
     let res1 = []
     let num = 0
     
