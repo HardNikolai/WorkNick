@@ -18,7 +18,6 @@ const string2 = "abcbacabcqbcabcbnaba"
 
 
 function checkWord(str) {
-    let res = ''
 
     for (let i = 0; i < str.length; i++) {
 
