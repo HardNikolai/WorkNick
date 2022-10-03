@@ -11,14 +11,13 @@ Output: [5, 7, 7, 8, 3, 6, 4, -7]*/
 
 function delElemArr(arr1, arr2) {
     let array = arr1
-    let res
     for (let i = 0; i < arr2.length; i++) {
 
         for (let n = array.length; n > 0; n--) {
             
             if (arr2[i] === array[n]) {
                 
-                res = arr1.splice(n, 1)
+                arr1.splice(n, 1)
        
             }
  
