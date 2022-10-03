@@ -29,19 +29,14 @@ function group_obj(arr) {
   
     let res_lst = []
   
-    for (let i = 0; i < arr.length; i++) {
   
-      if (i > 0) {
-        break
-      }
-  
-      if (i === 0) {
-        obj1['name'] =  arr[i].name
-        obj1['price'] = arr[i].price  
+    
+        obj1['name'] =  arr[0].name
+        obj1['price'] = arr[0].price  
         
         for (let n = 1; n < arr.length; n++) {
   
-          if(arr[i].name === arr[n].name) {
+          if(arr[0].name === arr[n].name) {
             obj1['name'] =  arr[n].name
             obj1['price'] += arr[n].price
           }
@@ -52,7 +47,7 @@ function group_obj(arr) {
   
         for (let n = 1; n < arr.length; n++) {
   
-          if(arr[i].name != arr[n].name) {
+          if(arr[0].name != arr[n].name) {
             let obj2 = {}
   
             obj2['name'] = arr[n].name
@@ -60,14 +55,11 @@ function group_obj(arr) {
             res_lst.push(obj2)
           }
         } 
-      }
-  
-  
-    }
-    console.log(res_lst)
+    
+
     return res_lst
-  }
+    }
   
   
-group_obj(array1)
+console.log(group_obj(array1))
  
