@@ -10,29 +10,34 @@ Output: [7, 8, 3, 98, 13]*/
 
 const array1 = [5, 7, 6, 2, 8, 3, 5, 6, 2, 98, 13]
 
-let num = 0
-let res = []
 
-for (let i = 0; i < array1.length; i++) {
+function unicEl(arr) {
+    let num = 0
+    let res = []
+
+    for (let i = 0; i < arr.length; i++) {
     
-    for (let n = 0; n < array1.length; n++) {
-
-        if (array1[i] === array1[n]) {
-            num += 1
-        }
-
-        if (n + 1 === array1.length) {
-            
-            if (num === 1) {
+        for (let n = 0; n < arr.length; n++) {
+    
+            if (arr[i] === arr[n]) {
+                num += 1
+            }
+    
+            if (n + 1 === arr.length) {
                 
-                res.push(array1[i])
-                num = 0
-
-            } else {
-                num = 0
+                if (num === 1) {
+                    
+                    res.push(arr[i])
+                    num = 0
+    
+                } else {
+                    num = 0
+                }
             }
         }
     }
+
+    return res
 }
 
-console.log(res)
+console.log(unicEl(array1))
