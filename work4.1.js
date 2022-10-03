@@ -15,7 +15,6 @@ const array2 = [8, 5, 7, -3, 6, 3, 1, 4, 2]
 
 function addUnicElem(arr1, arr2) {
     let num = 0
-    let res = []
 
     for (let i = 0; i < arr2.length; i++) {
 
