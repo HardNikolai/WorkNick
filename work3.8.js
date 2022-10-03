@@ -27,14 +27,12 @@ const array1 = [
   { name: "test2", age: 12, country: "RF" },
   { name: "test1", age: 54, country: "RF" }
 ]
-console.log(array1)
+
 
 function sortArray(arr, element_sort, parametr_sort) {
   let res = []
   let res1 = []
   let num = 0
-
-
 
   for (let i = 0; i < arr.length; i++) {
 
@@ -54,7 +52,7 @@ function sortArray(arr, element_sort, parametr_sort) {
 
     }
   }
-  console.log(res)
+
   for (let i = 0; i < res.length; i++) {
 
     for (let key of Object.keys(arr[num])) {
