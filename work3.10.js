@@ -25,14 +25,10 @@ const string2 = "--|_|-|___|--"
 
 function changeLine(str) {
     let res = ''
-
-    for (let i = 0; i < str.length; i++) {
-        
+    for (let i = 0; i < str.length; i++) {      
         if (str[i] === '_') {
-
             res += 0
         } else if (str[i] === '-') {
-
             res += 1
         }
     }
