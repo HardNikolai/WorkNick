@@ -24,8 +24,8 @@ const array1 = [
 
 
 function newObj(arr) {
-    let obj = {}
-    let array = []
+    const obj = {}
+    const array = []
 
     for (let i = 0; i < arr.length; i++) {
         

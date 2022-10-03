@@ -33,6 +33,7 @@ function obgString(str) {
     }
     
     work_word = str.slice(first_num)
+
     first_num = 0
 
 
