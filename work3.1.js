@@ -25,33 +25,23 @@ const array1 = [6, 43, -6, 3, 0, 5, 2, 7]
 
 const sortElements = (arr, direction) => {
     if (direction === 'asc') {
-
         for (let i = 0; i < arr.length - 1; i++) {
-
             for (let j = 0; j < arr.length - 1 - i; j++) {
-
                 if (arr[j] > arr[j + 1]) {
                     let temp = arr[j]
-
                     arr[j] = arr[j + 1]
                     arr[j + 1] = temp
                 }
             }
-        }    
-    
-        console.log(arr)
-    
+        }        
+        console.log(arr)    
         return arr
 
     } else if (direction === 'desc') {
-
         for (let i = 0, endI = arr.length - 1; i < endI; i++) {
-
             for (let j = 0, endJ = endI - i; j < endJ; j++) {
-
                 if (arr[j] < arr[j + 1]) {
                     let swap = arr[j]
-
                     arr[j] = arr[j + 1]
                     arr[j + 1] = swap
                 }
