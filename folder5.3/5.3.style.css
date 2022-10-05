@@ -1,51 +1,37 @@
-html, body {
-    height: 100%;
-    width: 100%;
-}
-
 .circle {
+    padding-inline-start: 0px;
+    list-style-type: none;
     height: 200px;
     width: 200px;
     display: flex;
     align-items: center;
+    background: #a2cb92;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
 }
 
-.first_circle {
+.chart {
     height: 200px;
     width: 200px;
-    background: linear-gradient(to left, #a2cb92 50%, #d5e5c0 50%);
+    background-image: conic-gradient(rgb(203, 216, 200) 0deg, rgb(203, 216, 200) 77deg, #96D77B 2deg);
+    transform: rotate(45deg);
     border-radius: 100%;
-    transform: rotate(220deg);
     display: flex;
     align-items: center;
     text-align: center;
-}
-
-.second_circle{
-    height: 200px;
-    width: 200px;
-    background: linear-gradient(to left, #a2cb92 50%, rgb(213 229 192 / 0%) 10%);
-    border-radius: 100%;
-    transform: rotate(270deg);
-    display: flex;
-    align-items: center;
-}
-
-.third_circle{
-    height: 135px;
-    width: 135px;
-    display: flex;
-    text-align: center;
-    background: #eef5e6;
-    border-radius: 100%;
-    margin: 0 auto;
-}
-
-.indicator {
-    font-size: 300%;
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    margin: 0 auto;
-    transform: rotate(230deg);
+}
+
+.indicator{
+    height: 135px;
+    width: 135px;
+    background: #eef5e6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(315deg);
+    font-size: 50px;
 }

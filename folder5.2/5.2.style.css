@@ -3,6 +3,8 @@ html, body {
 }
 
 .image_indecator {
+    padding-inline-start: 0px;
+    list-style-type: none;
     background-color: white;
     height: 20px;
     width: 100%;
