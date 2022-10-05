@@ -14,48 +14,14 @@ const array2 = [4, 2, 9, 4, 5, 4]
 function checkArray(arr1, arr2) {
     let res = []
 
-    let obj1_unic = {}
-    let obj2_unic = {}
-
-    let array1_unic = []
-    let array2_unic = []
-
-    // Уникальные значение для каждого массива
     for (let i = 0; i < arr1.length; i++) {
-        
-        obj1_unic[`${arr1[i]}`] = arr1[i]
-    }
-
-    for (let i = 0; i < arr2.length; i++) {
-        
-        obj2_unic[`${arr2[i]}`] = arr2[i]
-    }
-
-    for (let key of Object.keys(obj1_unic)) {
-        let k = Number(key)
-        array1_unic.push(k)
-    }
-
-    for (let key of Object.keys(obj2_unic)) {
-        let k = Number(key)
-        array2_unic.push(k)
-    }
-
-    // перебираю оба массива на совпадение елементов
-    for (let i = 0; i < array1_unic.length; i++) {
-
-        for (let n = 0; n < array2_unic.length; n++) {
-            
-            if (array1_unic[i] === array2_unic[n]) {
-
-                res.push(array1_unic[i])
-                break
+        for (let n = 0; n < arr2.length; n++) {
+            if (arr1[i] === arr2[n]) {
+                res.push(arr1[i])
             }
         }
     }
-
-    console.log(res)
-    return res
+    return [...new Set(res)]
 }
 
-checkArray(array1, array2)
+console.log(checkArray(array1, array2))
