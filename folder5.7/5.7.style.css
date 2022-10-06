@@ -15,7 +15,7 @@
     top: 100px
 }
 
-.container_start {
+.end_of_container {
     writing-mode: tb-rl;
     transform: rotate(180deg);
     height: 150px;
@@ -30,7 +30,7 @@
     left: 0px;
 }
 
-.container_finish {
+.container_inside {
     display: flex;
     flex-direction: row;
     position: relative;
@@ -41,7 +41,7 @@
     transition: left .4s linear;
 }
 
-.container_finish:hover {
+.container_inside:hover {
     left: 0px;
     height: 150px;
     width: 400px;
