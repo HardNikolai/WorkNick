@@ -3,17 +3,17 @@ html, body {
     width: 100%;
 }
 
-.comment {
+.fake_button {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 3%;
-    width: 12%;
+    height: 30px;
+    width: 140px;
     border: 1px solid black;
+    cursor: pointer;
 }
 
-.comment:hover {
+.fake_button:hover {
     background: linear-gradient(#fcfef4, #eaebd3);
-    cursor: pointer;
     color: red;
 }
