@@ -4,93 +4,120 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Layout 9</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="5.9.style.css">
 </head>
 <body>
-    <div class="header">
-        <div class="logo_img">
-            <img src="	https://capp.nicepage.com/e8c889b806f22a84c29814b118c51ccf97e5c376/images/default-logo.png">
-        </div>
-        <div class="page_menu">
-            <ul>
-                <li>Page 1</li>
-                <li>Page 2</li>
-            </ul>
-        </div>
-
-        <div class="hamburger-menu">
+    <ul class="head_of_body">
+        <li class="block_logo">
+            <a href="https://nicepage.com/ru/html-templates/preview/stroitelnye-uslugi-i-plany-110214?device=desktop">
+                <img src="https://capp.nicepage.com/e8c889b806f22a84c29814b118c51ccf97e5c376/images/default-logo.png" alt="" class="logo">
+            </a>
+        </li>
+        <li class="list_of_pages">
+            <a href="https://nicepage.com/ru/html-templates/preview/stroitelnye-uslugi-i-plany-110214?device=desktop">
+                <p class="page_number">
+                    Page 1
+                </p>
+            </a>
+            <a href="https://nicepage.com/ru/html-templates/preview/kak-iskat-dom-154580?device=desktop">
+                <p class="blue_color_page">
+                    Page 2
+                </p>
+            </a>
+        </li>
+        <li class="hamburger-menu">
             <input id="menu__toggle" type="checkbox" />
             <label class="menu__btn" for="menu__toggle">
               <span></span>
             </label>
             <ul class="menu__box">
-                <div class="menu__box_black">
+                <ul class="menu__box_black">
                     <li>Page 1</li>
                     <li>Page 2</li>
-                </div>
+                </ul>
             </ul>
-        </div>
-
-    </div>
-    <div class="div_body">
-        <div class="head">
-            <h1>Как искать дом</h1>
-        </div>
-        <div class="image_body">
-            <img src="https://images03.nicepage.io/c461c07a441a5d220e8feb1a/e52fd3fef67e50928b010681/-min.jpg">
-        </div>
-        <div class="category_house">
+        </li>
+    </ul>
+    <ul class="main">
+        <li class="head_of_main">
+            <h1 class="name_head_of_main">Как искать дом</h1>
+        </li>
+        <li class="main_centre">
+            <img src="https://images03.nicepage.io/c461c07a441a5d220e8feb1a/e52fd3fef67e50928b010681/-min.jpg" alt="">
+        </li>
+        <li class="category_house">
             <div class="category">
                 <div class="image_icon">
-                    <img src="image/Screenshot from 2022-10-03 15-47-28.png">
+                    <div class="image_icon_border">
+                        <img src="image/image_svg/budget.svg" alt="">
+                    </div>
                 </div>
-                <h3>ВАШ БЮДЖЕТ</h3>
-                <p>Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
+                <h3 class="name_category">ВАШ БЮДЖЕТ</h3>
+                <p class="about_category">Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
             </div>
             <div class="category">
                 <div class="image_icon">
-                    <img src="image/Screenshot from 2022-10-03 16-14-33.png">
+                    <div class="image_icon_border">
+                        <img src="image/image_svg/style_house.svg" alt="">
+                    </div>
                 </div>
-                <h3>СТИЛЬ ДОМА</h3>
-                <p>Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
+                <h3 class="name_category">СТИЛЬ ДОМА</h3>
+                <p class="about_category">Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
             </div>
             <div class="category">
                 <div class="image_icon">
-                    <img src="image/Screenshot from 2022-10-03 16-16-39.png">
+                    <div class="image_icon_border">
+                        <img src="image/image_svg/number_of_beds.svg" alt="">
+                    </div>
                 </div>
-                <h3>КОЛИЧЕСТВО КОЕК</h3>
-                <p>Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
+                <h3 class="name_category">КОЛИЧЕСТВО КОЕК</h3>
+                <p class="about_category">Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
             </div>
             <div class="category">
                 <div class="image_icon">
-                    <img src="image/Screenshot from 2022-10-03 16-20-00.png">
+                    <div class="image_icon_border">
+                        <img src="image/image_svg/location.svg" alt="">
+                    </div>
                 </div>
-                <h3>МЕСТО РАСПОЛОЖЕНИЯ</h3>
-                <p>Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
+                <h3 class="name_category">МЕСТО РАСПОЛОЖЕНИЯ</h3>
+                <p class="about_category">Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
             </div>
             <div class="category">
                 <div class="image_icon">
-                    <img src="image/Screenshot from 2022-10-03 16-21-32.png">
+                    <div class="image_icon_border">
+                        <img src="image/image_svg/garage.svg" alt="">
+                    </div>
                 </div>
-                <h3>ГАРАЖ</h3>
-                <p>Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
+                <h3 class="name_category">ГАРАЖ</h3>
+                <p class="about_category">Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
             </div>
             <div class="category">
                 <div class="image_icon">
-                    <img src="image/Screenshot from 2022-10-03 16-22-46.png">
+                    <div class="image_icon_border">
+                        <img src="image/image_svg/patio_or_deck.svg" alt="">
+                    </div>
                 </div>
-                <h3>ПАТИО ИЛИ ПАЛУБА</h3>
-                <p>Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
+                <h3 class="name_category">ПАТИО ИЛИ ПАЛУБА</h3>
+                <p class="about_category">Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
             </div>
-        </div>
-        <div class="image_freepik">
-            <p>ИЗОБРАЖЕНИЕ ИЗ <a href="https://www.freepik.com/photos/people">FREEPIK</a></p>
-        </div>
-    </div>
+        </li>
+        <li class="image_freepik">
+            <p class="about_category">ИЗОБРАЖЕНИЕ ИЗ <a href="https://www.freepik.com/photos/people" class="freepik">FREEPIK</a></p>
+        </li>
+    </ul>
     <div class="footer">
-        <p>Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
-        <p><a href="https://nicepage.com/website-templates">Website Templates</a> создано с помощью <a href="https://nicepage.com/https://nicepage.com">Website Builder Software</a>.</p>
+        <p class="beginnig_of_footer">Образец текста. Щелкните, чтобы выделить текстовое поле. Щелкните еще раз или дважды щелкните, чтобы начать редактирование текста.</p>
+        <p class="end_of_footer"><a href="https://nicepage.com/website-templates" class="footnote_of_footer">Website Templates</a> создано с помощью <a href="https://nicepage.com/https://nicepage.com" class="footnote_of_footer">Website Builder Software</a>.</p>
     </div>
 </body>
 </html>
