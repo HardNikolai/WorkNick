@@ -88,8 +88,7 @@
 .container {
     display: flex;
     flex-direction: row;
-    width: 1000px;
-    height: 600px;
+    gap: 10px
 }
 
 .container_in {
@@ -101,15 +100,12 @@
     margin-top: 80px;
     display: flex;
     flex-direction: row;
+    gap: 13px;
 }
 
-.foto3 {
-    margin-left: 30px;
-}
 
 .body_img1 img {
     padding-top: 56px;
-    padding-right: 25px;
     width: 600px;
     height: 580px;
 }
@@ -153,22 +149,12 @@
         height: 536px;
     }
 
-    .foto2 {
-        width: 188px;
-        height: 202px;
-    }
-
-    .foto3 {
-        width: 188px;
-        height: 202px;
-    }
-
     .container_foto {
         margin-top: 0;
     }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 946px) {
     .about {
         width: 680.81px;
         height: 240.72px;
@@ -212,7 +198,7 @@
     }
 
     .modile_background1 img {
-        padding-top: 110px;
+        padding-top: 245px;
         width: 680px;
         height: 680px;
     }
@@ -239,13 +225,9 @@
         height: 310px;
         width: 310px;
     }
-
-    .foto3 {
-        margin-left: 150px;
-    }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 680px) {
     .modile_background1 {
         height: 1100px;
     }
@@ -258,7 +240,7 @@
         flex-direction: column;
     }
     .modile_background1 img {
-        padding-top: 650px;
+        padding-top: 1050px;
         width: 550px;
         height: 550px;
     }
@@ -292,22 +274,18 @@
         height: 550px;
     }
 
-    .foto3 {
-        margin-top: 370px;
-        margin-left: 0px;
-    }
     .foto3 img {
         width: 550px;
         height: 550px;
     }
     .background_third {
-        margin-top: 1000px;
+        margin-top: 1100px;
     }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 551px) {
     .modile_background1 img {
-        padding-top: 230px;
+        padding-top: 400px;
         width: 350px;
         height: 350px;
     }
@@ -323,15 +301,21 @@
         padding-top: 0px;
     }
 
-    .foto3 {
-        margin-top: 143px;
-    }
-
     .foto3 img {
         margin-top: 30px;
         padding-top: 0px;
     }
     .background_third {
-        margin-top: 400px;
+        margin-top: 390px;
+    }
+}
+
+@media (max-width: 402px) {
+    .bs_p1 {
+        width: 100%;
+    }
+
+    .bs_p2 {
+        text-align: center;
     }
 }
