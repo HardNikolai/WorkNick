@@ -25,7 +25,6 @@ body {
 
 .logo {
     margin-top: 20px;
-    margin-right: 400px;
     height: 32px;
     width: 64px;
     cursor: pointer;
@@ -264,7 +263,7 @@ li {
 
     .category_house {
         margin-top: -220px;
-        width: 1039px;
+        width: 100%;
     }
 }
 
@@ -378,8 +377,8 @@ li {
     }
 
     .category {
-        width: 335px;
-        height: 360px;
+        width: 250px;
+        height: 430px;
         margin: 0;
     }
 
@@ -469,7 +468,7 @@ li {
     }
 }
 
-@media (max-width:440px) {
+@media (max-width:549px) {
     .main_centre img {
         width: 379px;
     }
@@ -488,5 +487,11 @@ li {
     .category {
         width: 381px;
         height: 347px;
+    }
+    .beginnig_of_footer {
+        width: 100%;
+    }
+    .end_of_footer {
+        text-align: center;
     }
 }
