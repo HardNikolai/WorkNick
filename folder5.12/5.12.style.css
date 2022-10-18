@@ -252,6 +252,9 @@ ul {
         width: 250px;
         height: 400px;
     }
+    .logo {
+        padding-top: 30px;
+    }
 }
 
 @media (max-width:767px) {
