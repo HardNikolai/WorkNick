@@ -12,19 +12,23 @@ body {
 }
 
 .head {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
+.head-menu {
+    display: flex;
+    width: 1229px;
+    justify-content: space-between;
+}
 .head ul {
     list-style-type: none;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    width: 87%;
     padding-top: 20px;
     padding-bottom: 20px;
-    padding-right: 250px;
     gap: 30px
 }
 
@@ -34,7 +38,6 @@ body {
 }
 
 .head img {
-    padding-left: 200px;
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -55,7 +58,7 @@ body {
 .menu_about {
     display: flex;
     flex-direction: column;
-    width: 35%;
+    width: 750px;
 
 }
 
@@ -78,6 +81,7 @@ body {
 }
 
 .catalog {
+    gap: 30px;
     display: flex;
     flex-wrap: wrap;
     margin-left: 1%;
@@ -93,14 +97,12 @@ body {
     background-color: white;
     height: 285px;
     width: 600px;
-    margin-left: 1%;
-    margin-right: 1%;
-    margin-top: 1%;
 }
 
 .pizza_type img {
     width: 255px;
     height: 249px;
+    object-fit: cover;
     margin: 3%;
 }
 
@@ -144,8 +146,8 @@ body {
 }
 
 .div_body .text_about {
-    margin-top: 2%;
-    margin-bottom: 4%;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .div_body p>a {
@@ -159,13 +161,16 @@ body {
 
 .footer {
     background-color: #333333;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .first_p {
     padding-top: 4%;
     color: white;
-    margin-left: 37%;
-    margin-right: 37%;
+    width: 410px;
 }
 
 .second_p {
@@ -189,32 +194,25 @@ body {
 }
 
 @media (max-width: 1250px) {
-    .menu1 {
-        display: none;
-    }
-    .menu2 {
-        display: block;
+    .head-menu {
+        width: 939px;
     }
     .pizza_type {
         width: 467px;
     }
 
-    .menu_about {
-        width: 76%;
-    }
-
     .pizza_type img {
         position: absolute;
-        clip: rect(0px 192px 249px 60px);
+        clip: rect(0px 212px 248px 36px);
         margin: 0;
-        margin-top: 1%;
-        margin-left: -3%;
+        margin-top: 20px;
+        margin-left: -10px;
     }
 
     .pizza_type_about {
         margin: 0;
-        margin-top: 5%;
-        margin-left: 38%;
+        padding-top: 26px;
+        padding-left: 220px;
         width: 50%;
     }
 
@@ -240,8 +238,18 @@ body {
 }
 
 @media (max-width: 973px) {
+    .pizza_type_about {
+        margin-left: 0;
+        padding-left: 25px;
+    }
+    .menu1 {
+        display: none;
+    }
+    .menu2 {
+        display: block;
+    }
     .menu_about {
-        width: 67%;
+        width: 728px;
     }
 
     .pizza_type_about h5 {
@@ -256,10 +264,6 @@ body {
         margin-left: 3%;
     }
 
-    .pizza_type_about {
-        margin-left: 6%;
-    }
-
     .pizza_type {
         width: 595px;
     }
@@ -271,13 +275,8 @@ body {
         margin-left: 13%;
     }
 
-    .first_p {
-        margin-left: 31%;
-        margin-right: 31%;
-    }
-
     .head img {
-        padding-left: 100px;
+        padding-left: 50px;
     }
 
     .menu2 img{
@@ -286,7 +285,13 @@ body {
     }
 }
 
-@media (max-width: 625px) {
+@media (max-width: 732px) {
+    .menu_about {
+        width: 528px;
+    }
+    .pizza_type {
+        width: 555px;
+    }
     .pizza_type_about h5 {
         font-size: 180%;
     }
@@ -298,7 +303,6 @@ body {
     .price {
         margin: 0;
         margin-top: 7%;
-        margin-bottom: 7%;
         font-size: 122%;
     }
 
@@ -309,10 +313,13 @@ body {
 }
 
 @media (max-width: 593px) {
+    .menu_about {
+        width: 328px;
+    }
     .pizza_type {
         flex-direction: column;
         width: 350px;
-        height: 454px;
+        height: 484px;
     }
 
     .pizza_type_about {
@@ -346,5 +353,9 @@ body {
     .pizza_type img {
         height: 250px;
         width: 329px;
+    }
+
+    .first_p {
+        width: 350px;
     }
 }
