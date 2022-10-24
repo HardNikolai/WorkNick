@@ -235,8 +235,8 @@ ul {
         display: grid;
         grid-template-columns: 360px 360px;
         grid-template-rows: 350px 350px;
-        width: 800px;
-        justify-content: start;
+        width: 750px;
+        justify-content: center;
     }
 
     .content {
