@@ -2,26 +2,47 @@
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+    color: #0066bf;
+}
+
 .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     height: 100px;
     width: 100%;
     background-color: white;
 }
 
+.page {
+    display: flex;
+    align-items: center;
+}
+
+.block-head {
+    display: flex;
+    width: 1110px;
+    justify-content: space-between;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    object-fit:cover;
+}
+
 .header img {
-    margin-top: 38px;
-    margin-left: 40px;
+    cursor: pointer;
     height: 30px;
 }
 
 .header div {
     color: #0066bf;
-    margin-top: 38px;
-    margin-right: 40px;
-    font-size: 120%;
 }
 
 .body_div {
@@ -45,7 +66,7 @@
     height: 250px;
     width: 100%;
     background-color: #292d33;
-    color:white
+    color:white;
 }
 
 .about {
@@ -63,7 +84,7 @@
 }
 
 .about_study {
-    padding-top: 4%;
+    padding-top: 20px;
     color: white;
     font-style: italic;
     font-family: 'Open Sans',sans-serif;
@@ -72,7 +93,7 @@
 }
 
 .freepik {
-    padding-top: 4%;
+    padding-top: 12px;
     color: white;
     font-size: 1rem;
     line-height: 1.6;
@@ -88,7 +109,7 @@
 .container {
     display: flex;
     flex-direction: row;
-    gap: 10px
+    gap: 30px;
 }
 
 .container_in {
@@ -100,14 +121,15 @@
     margin-top: 80px;
     display: flex;
     flex-direction: row;
-    gap: 13px;
+    gap: 30px;
 }
 
 
 .body_img1 img {
     padding-top: 56px;
-    width: 600px;
-    height: 580px;
+    width: 554px;
+    height: 581px;
+    object-fit:cover;
 }
 
 .bs_p1 {
@@ -139,7 +161,22 @@
     display: none;
 }
 
-@media (max-width:1040px) {
+.foto2 img {
+    width: 209px;
+    height: 225px;
+    object-fit:cover;
+}
+
+.foto3 img {
+    width: 209px;
+    height: 225px;
+    object-fit:cover;
+}
+
+@media (max-width:1200px) {
+    .block-head {
+        width: 950px;
+    }
     .container {
         width: 950px;
     }
@@ -150,26 +187,42 @@
     }
 
     .container_foto {
-        margin-top: 0;
+        margin-top: 59px;
+    }
+
+    .foto2 img {
+        width: 188px;
+        height: 202px;
+    }
+
+    .foto3 img {
+        width: 188px;
+        height: 202px;
     }
 }
 
-@media (max-width: 946px) {
+@media (max-width: 992px) {
+    .block-head {
+        width: 720px;
+    }
     .about {
-        width: 680.81px;
+        width: 698px;
         height: 240.72px;
     }
     .about h1 {
-        padding-top: 20px;
-        font-size: 56px;
+        padding-top: 30px;
+        font-size: 60px;
     }
     .freepik {
-        padding-top: 10px;
+        padding-top: 12px;
     }
     .page {
         display: none;
     }
 
+    .container_foto {
+        margin-top: 30px;
+    }
     .burger img {
         cursor: pointer;
         margin-top: 0px;
@@ -177,7 +230,8 @@
     }
 
     .burger {
-        display: block;
+        display: flex;
+        align-items: center;
     }
 
     .background_first {
@@ -192,15 +246,15 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 1100px;
+        height: 1400px;
         background-color: #292d33;
         align-items: center;
     }
 
-    .modile_background1 img {
-        padding-top: 245px;
-        width: 680px;
-        height: 680px;
+    .modile_body_img1 img {
+        padding-top: 370px;
+        width: 720px;
+        height: 758px;
     }
 
     .background_third {
@@ -216,18 +270,21 @@
 
     .foto2 img {
         padding-top: 0px;
-        height: 310px;
-        width: 310px;
+        height: 365px;
+        width: 345px;
     }
 
     .foto3 img {
         padding-top: 0px;
-        height: 310px;
-        width: 310px;
+        height: 365px;
+        width: 345px;
     }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
+    .block-head {
+        width: 540px;
+    }
     .modile_background1 {
         height: 1100px;
     }
@@ -241,19 +298,19 @@
     }
     .modile_background1 img {
         padding-top: 1050px;
-        width: 550px;
-        height: 550px;
+        width: 540px;
+        height: 561px;
     }
     .foto2 img {
         padding-top: 0px;
-        height: 150px;
-        width: 150px;
+        height: 563px;
+        width: 540px;
     }
 
     .foto3 img {
         padding-top: 0px;
-        height: 150px;
-        width: 150px;
+        height: 563px;
+        width: 540px;
     }
 
     .about h1 {
@@ -269,33 +326,27 @@
         font-size: 16px;
     }
 
-    .foto2 img {
-        width: 550px;
-        height: 550px;
-    }
-
-    .foto3 img {
-        width: 550px;
-        height: 550px;
-    }
     .background_third {
         margin-top: 1100px;
     }
 }
 
-@media (max-width: 551px) {
+@media (max-width: 576px) {
+    .block-head {
+        width: 340px;
+    }
     .modile_background1 img {
         padding-top: 400px;
-        width: 350px;
-        height: 350px;
+        width: 340px;
+        height: 342px;
     }
     .about {
-        width: 355px;
+        width: 342px;
         height: 240.72px;
     }
 
     .about h1 {
-        font-size: 40px;
+        font-size: 36px;
     }
     .foto2 img {
         padding-top: 0px;

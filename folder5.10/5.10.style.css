@@ -2,6 +2,11 @@
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+    color: #000;
+}
+
 .menu2 {
     display: none;
 }
@@ -19,7 +24,7 @@ body {
 
 .head-menu {
     display: flex;
-    width: 1229px;
+    width: 1113px;
     justify-content: space-between;
 }
 .head ul {
@@ -64,8 +69,9 @@ body {
 
 .menu_about h2 {
     color: #f12c0e;
-    font-size: 300%;
+    font-size: 60px;
     font-family: 'Oswald', sans-serif;
+    font-weight: 400;
     margin-top: 9%;
     margin-bottom: 2%;
 }
@@ -95,19 +101,18 @@ body {
     display: flex;
     flex-direction: row;
     background-color: white;
-    height: 285px;
-    width: 600px;
+    height: 310px;
+    width: 555px;
 }
 
 .pizza_type img {
     width: 255px;
-    height: 249px;
+    height: 246px;
     object-fit: cover;
-    margin: 3%;
+    margin: 30px;
 }
 
 .pizza_type_about {
-    margin-top: 5%;
     width: 50%;
 }
 
@@ -115,33 +120,42 @@ body {
     font-family: 'Oswald', sans-serif;
     font-size: 200%;
     font-weight: 400;
+    font-size: 30px;
+    margin-top: 50px;
 }
 
 .pizza_about {
     font-style: italic;
-    font-size: 150%;
-    margin-top: 5%;
+    font-size: 16px;
+    font-family: 'Open Sans',sans-serif;
+    margin-top: 20px;
     text-align: start;
 }
 
 .price {
     color: #f12c0e;
-    font-size: 193%;
+    font-size: 18px;
     font-weight: 700;
     text-align: start;
-    font-family: 'Roboto',sans-serif;
-    margin-top: 5%;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 20px;
 }
 
 .move_to_basket {
     cursor: pointer;
-    margin-top: 4%;
-    height: 15%;
-    width: 60%;
+    margin-top: 20px;
+    height: 42px;
+    width: 217px;
     background-color: lightgrey;
 }
 
+.move_to_basket:hover {
+    background-color: rgb(161, 161, 161);
+}
+
 .move_to_basket p {
+    font-size: 14px;
+    font-family:'Open Sans',sans-serif;
     padding-top: 5%;
 }
 
@@ -155,8 +169,8 @@ body {
 }
 
 .freepik {
-    margin-top: 2%;
-    margin-bottom: 4%;
+    margin-top: 30px;
+    margin-bottom: 50px;
 }
 
 .footer {
@@ -168,15 +182,15 @@ body {
 }
 
 .first_p {
-    padding-top: 4%;
+    padding-top: 40px;
     color: white;
     width: 410px;
 }
 
 .second_p {
-    padding-top: 4%;
+    padding-top: 80px;
     color: white;
-    padding-bottom: 2%;
+    padding-bottom: 30px;
 }
 
 .footer p>a{
@@ -186,6 +200,8 @@ body {
 .block_page {
     width: 50px;
     height: 30px;
+    font-size: 16px;
+    font-family: 'Open Sans',sans-serif;
 }
 
 .block_page:hover {
@@ -193,7 +209,7 @@ body {
     cursor: pointer;
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1200px) {
     .head-menu {
         width: 939px;
     }
@@ -202,45 +218,36 @@ body {
     }
 
     .pizza_type img {
+        margin: 0;
+        margin-top: 30px;
+        margin-left: -10px;
         position: absolute;
         clip: rect(0px 212px 248px 36px);
-        margin: 0;
-        margin-top: 20px;
-        margin-left: -10px;
     }
 
     .pizza_type_about {
+        padding-left: 225px;
         margin: 0;
         padding-top: 26px;
-        padding-left: 220px;
-        width: 50%;
+        width: 217px;
     }
 
     .pizza_type_about h5 {
-        font-size: 160%;
-    }
-
-    .move_to_basket {
-        width: 80%;
-    }
-
-    .pizza_about {
-        font-size: 124%;
-        margin-top: 13%;
+        margin-top: 25px;
     }
 
     .price {
         margin: 0;
         margin-top: 10%;
         margin-bottom: 10%;
-        font-size: 118%;
     }
 }
 
-@media (max-width: 973px) {
+@media (max-width: 992px) {
     .pizza_type_about {
+        padding-left: 0px;
         margin-left: 0;
-        padding-left: 25px;
+        width: 332px;
     }
     .menu1 {
         display: none;
@@ -252,107 +259,93 @@ body {
         width: 728px;
     }
 
-    .pizza_type_about h5 {
-        font-size: 136%;
+    .pizza_type img {
+        margin: 30px;
+        width: 300px;
+        height: 249px;
+        position: inherit;
+        clip: inherit;
+    }
+
+    .pizza_type {
+        width: 720px;
+        height: 310px;
+    }
+
+    .menu2 img{
+        padding-left: 0;
+    }
+
+    .head-menu {
+        width: 720px;
+    }
+}
+
+@media (max-width: 768px) {
+    .head-menu {
+        width: 540px;
+    }
+    .menu_about {
+        width: 540px;
+    }
+    .pizza_type {
+        width: 549px;
+        height: 310px;
     }
 
     .pizza_type img {
-        position: inherit;
-        clip: inherit;
-        margin: 0;
-        margin-top: 4%;
-        margin-left: 3%;
+        width: 245px;
+        height: 249px;
     }
-
-    .pizza_type {
-        width: 595px;
-    }
-
-    .pizza_about {
-        font-size: 91%;
-        margin-top: 5%;
-        margin-left: 1%;
-        margin-left: 13%;
-    }
-
-    .head img {
-        padding-left: 50px;
-    }
-
-    .menu2 img{
-        padding-left: 0;
-        padding-right: 30px;
-    }
-}
-
-@media (max-width: 732px) {
-    .menu_about {
-        width: 528px;
-    }
-    .pizza_type {
-        width: 555px;
-    }
-    .pizza_type_about h5 {
-        font-size: 180%;
+    .pizza_type_about {
+        width: 332px;
     }
     .pizza_about {
         margin-left: 0;
-        font-size: 157%;
-    }
-
-    .price {
-        margin: 0;
-        margin-top: 7%;
-        font-size: 122%;
-    }
-
-    .menu2 img{
-        padding-left: 0;
-        padding-right: 30px;
     }
 }
 
-@media (max-width: 593px) {
+@media (max-width: 576px) {
     .menu_about {
         width: 328px;
     }
+
+    .head-menu {
+        width: 340px;
+    }
     .pizza_type {
         flex-direction: column;
-        width: 350px;
-        height: 484px;
+        width: 340px;
+        height: 469px;
     }
 
     .pizza_type_about {
-        margin-left: 3%;
+        margin-left: 20px;
         width: 328px;
+        padding-top: 0px;
     }
 
-    .pizza_about {
-        font-size: 115%;
+    .pizza_type_about h5 {
+        font-size: 24px;
+        margin-top: 0px;
     }
 
     .price {
-        margin-top: 3%;
+        margin-top: 20px;
         margin-bottom: 1%;
         font-size: 103%;
     }
 
     .move_to_basket {
-        margin-top: 0;
-    }
-
-    .move_to_basket p {
-        padding-top: 3%;
-    }
-
-    .move_to_basket {
-        width: 60%;
-        height: 30px;
+        margin-top: 20px;
+        align-items: center;
+        justify-content: center;
     }
 
     .pizza_type img {
-        height: 250px;
-        width: 329px;
+        margin: 20px;
+        height: 200px;
+        width: 300px;
     }
 
     .first_p {
