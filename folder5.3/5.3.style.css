@@ -1,0 +1,37 @@
+.circle {
+    padding-inline-start: 0px;
+    list-style-type: none;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    background: #a2cb92;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.chart {
+    height: 200px;
+    width: 200px;
+    background-image: conic-gradient(rgb(203, 216, 200) 0deg, rgb(203, 216, 200) 77deg, #96D77B 2deg);
+    transform: rotate(45deg);
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.indicator{
+    height: 135px;
+    width: 135px;
+    background: #eef5e6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(315deg);
+    font-size: 50px;
+}

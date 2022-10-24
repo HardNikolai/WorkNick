@@ -1,0 +1,33 @@
+html, body {
+    margin: 1%;
+}
+
+.image_indecator {
+    padding-inline-start: 0px;
+    list-style-type: none;
+    background-color: white;
+    height: 20px;
+    width: 100%;
+    outline: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    overflow: hidden;
+}
+
+.blue_elem {
+    height: 20px;
+    width: 30%;
+    background: linear-gradient(to top,#6ebcf7, #3a92ed, #6ebcf7);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.dark_elem {
+    height: 20px;
+    width: 100%;
+    background: linear-gradient(to bottom, #383838, #989898);
+    border-radius: 10px;
+}

@@ -1,0 +1,63 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+}
+.list_of_batteries {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    width: 70%;
+}
+
+.battery {
+    min-width: 300px;
+    min-height: 100px;
+    height: 26%;
+    width: 41%;
+    display: flex;
+    margin: 16px;
+}
+
+.body_batterry {
+    height: 100%;
+    width: 96%;
+    outline: 5px solid black;
+}
+.end_of_batterry{
+    height: 100%;
+    width: 6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.color_end_of_batterry {
+    height: 40%;
+    width: 64%;
+    border: 1px solid black;
+    background-color: black;
+}
+
+.color_red {
+    height: 100%;
+    width: 25%;
+    background-color: red;
+}
+
+.color_yellow {
+    height: 100%;
+    width: 65%;
+    background-color: yellow;
+}
+
+.color_green {
+    height: 100%;
+    width: 100%;
+    background-color: green;
+}
