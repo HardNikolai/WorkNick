@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout</title>
+    <link rel="stylesheet" href="7.style.css">
+    <script src="creation.js"></script>
+</head>
+<body>
+    <div class="block__accounting">
+        <div class="block-header">
+            <p class="text-in-the-title">Учет моих расходов</p>
+        </div>
+        <div class="container-data-entry">
+            <div class="container-entry">
+                <div class="first__block__container-data">
+                    <p class="title-place">Куда было потрачено:</p>
+                    <input id="data-place" class="text-place" placeholder="Куда было потрачено" type="string">
+                </div>
+                <div class="second__block__container-data">
+                    <p class="name_of_expenses">Сколько было потрачено:</p>
+                    <input id="data-expenses" class="text-expenses" placeholder="Сколько было потрачено" type="number">
+                </div>
+                <button class="add-a-list" onclick="onClickButton()">Добавить</button>
+            </div>
+        </div>
+        <div class="block-container">
+            <div class="container-total">
+                <p class="text-total" id="total"></p>
+            </div>
+            <ul class="container" id="container-with-content">
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
