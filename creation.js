@@ -55,8 +55,9 @@ window.onload = async function init() {
 async function onClickButton() {
     const checkValueFirst = valueInputFirst.trim();
     const checkValueSecond = valueInputSecond.trim();
-    const num = Number(checkValueSecond);
-    if (num > 0) {
+    const num = Number(Number(checkValueSecond).toFixed(2));
+
+    if (num >= 0) {
         const objData = {
             text_place: checkValueFirst,
             text_expenses: num,
@@ -211,7 +212,7 @@ function toChange(item, index) {
     introduceChangesExpenses.className = 'change-in-textExpenses';
     introduceChangesExpenses.id = `input-textExpenses-id=${index}`;
     introduceChangesExpenses.type = 'number';
-    introduceChangesExpenses.value = `${item.text_expenses}`;
+    introduceChangesExpenses.value = item.text_expenses;
     introduceChangesExpenses.rows = `${Math.ceil(introduceChangesExpenses.value.length / 20)}`;
 
     const imageOk = document.createElement('img');
@@ -260,7 +261,6 @@ function toChange(item, index) {
             item.text_place = newTextPlaceValue;
             item.date = newTextDateValue;
             item.text_expenses = newTextExpensesValue;
-
             const objData = {
                 text_place: item.text_place,
                 text_expenses: item.text_expenses,
@@ -269,7 +269,6 @@ function toChange(item, index) {
             
             try {
                 const resp = await requestProcessing(`http://localhost:8000/task?_id=${item._id}`, 'PATCH', objData);
-                console.log(resp, `http://localhost:8000/task?_id=${item._id}`)
                 if (resp.status === 200) {
                     const resp_all = await requestProcessing('http://localhost:8000/tasks', 'GET');    
                     let result = await resp_all.json();

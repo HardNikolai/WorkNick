@@ -13,7 +13,7 @@ module.exports.getAllTasks = async (req, res, next) => {
 module.exports.createNewTask = async (req, res, next) => {
     try {
         const dayReq = new Date(req.body.date);
-        const checkTypePrice = typeof(req.body.text_expenses) === 'number' && req.body.text_expenses > 0;
+        const checkTypePrice = typeof(req.body.text_expenses) === 'number' && req.body.text_expenses >= 0;
 
         if (checkTypePrice) {
             if (dayReq == 'Invalid Date') {
