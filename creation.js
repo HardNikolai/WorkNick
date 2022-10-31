@@ -240,7 +240,6 @@ window.onload = async function init() {
 
 render = async () => {
     allTasks = await requestProcessingGet(allTasks);
-    allTasks.sort((task1, task2) => task1._id > task2._id ? 1 : -1);
     allTasks.sort((task1, task2) => task1['isCheck'] > task2['isCheck'] ? 1 : -1);
 
     const content = document.getElementById('container-with-content');
