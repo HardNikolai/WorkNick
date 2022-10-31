@@ -12,14 +12,17 @@ module.exports.getAllTasks = async (req, res, next) => {
 
 module.exports.createNewTask = async (req, res, next) => {
     try {
-        if (typeof(req.body.isCheck) === 'boolean') {
+        const [textBody, isCheckBody] = [req.body.text.trim(), req.body.isCheck];
+        const checkingValues = typeof(isCheckBody) === 'boolean' && textBody.length;
+
+        if (checkingValues) {
             const task = await Task.create({
-                text: req.body.text,
-                isCheck: req.body.isCheck
+                text: textBody,
+                isCheck: isCheckBody
             });
             res.status(200).send(task);
         } else {
-            res.status(400).send({message: 'isCheck принимает только bollean значения'});
+            res.status(400).send({message: 'Некорректный ввод данных'});
         }
     } catch (error) {
         next(error);
@@ -29,14 +32,18 @@ module.exports.createNewTask = async (req, res, next) => {
 
 module.exports.changeTaskInfo = async (req, res, next) => {
     try {
-        if (typeof(req.body.isCheck) === 'boolean') {
-            const task = await Task.findByIdAndUpdate(req.query._id, {
-                text: req.body.text, 
-                isCheck: req.body.isCheck
+        const [textBody, isCheckBody, id] = [req.body.text.trim(), req.body.isCheck, req.body._id];
+        const checkingValues = typeof(isCheckBody) === 'boolean' && textBody.length;
+        
+        if (checkingValues) {
+            await Task.findByIdAndUpdate(id, {
+                text: textBody, 
+                isCheck: isCheckBody
             });
-            res.status(200).send(task);
+            const newTask = await Task.findById(id);
+            res.status(200).send(newTask);
         } else {
-            res.status(400).send({message: 'isCheck принимает только bollean значения'});
+            res.status(400).send({message: 'Некорректный ввод данных'});
         }
     } catch (error) {
         next(error);
@@ -46,13 +53,9 @@ module.exports.changeTaskInfo = async (req, res, next) => {
 
 module.exports.deleteTask = async (req, res, next) => {
     try {
-        const task = await Task.findById(req.query._id);
-        const delete_task = await Task.deleteOne({_id: req.query._id});
-        if (delete_task.deletedCount === 1) {
-            res.status(200).send(task);
-        } else {
-            throw new Error;
-        }
+        const task = await Task.findById(req.body._id);
+        await Task.deleteOne({_id: req.body._id});
+        res.status(200).send(task);
     } catch (error) {
         next(error);
         res.status(500).send({message: error.message});
