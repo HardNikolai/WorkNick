@@ -1,32 +1,232 @@
 let allTasks = [];
 let valueInput = '';
-let id_int = 0;
-const HTTP_HEADERS = {
+const httpHeaders = {
     'Content-Type': 'application/json;charset=utf-8',
     'Access-Control-Allow-Origin': '*'
-}
+};
+const urlGet = 'http://localhost:8000/tasks';
+const urlOtherRout = 'http://localhost:8000/task';
 
-function updateValue(event) {
-    valueInput = event.target.value;
-}
+//requests processing
 
-async function requestProcessing(url, method, obj) {
+async function requestProcessingGet(db) {
     document.querySelector('.spinner').style.display = 'flex';
     try {
         let mess;
-        const resp = await fetch(url, {
-        method: method,
-        headers: HTTP_HEADERS,
-        body: JSON.stringify(obj)
+        const resp = await fetch(urlGet, {
+            method: 'GET',
+            headers: httpHeaders
+        });
+        if (resp.status === 200) {
+            let result = await resp.json();
+            db = result.data;
+            return db;
+        } else {
+            mess = 'Ошибка сервера';
+            throw new Error;
+        }
+    } catch (error) {
+        alert(mess);
+    }
+}
+
+async function requestProcessingPost(newValue) {
+    document.querySelector('.spinner').style.display = 'flex';
+    try {
+        let mess;
+        const resp = await fetch(urlOtherRout, {
+            method: 'POST',
+            headers: httpHeaders,
+            body: JSON.stringify({
+                text: newValue,
+                isCheck: false
+            })
         });
         if (resp.status === 200) {
             return resp;
         } else {
             mess = 'Ошибка сервера';
             throw new Error;
-        } 
+        }
     } catch (error) {
         alert(mess);
+    }
+}
+
+async function requestProcessingPatch(newText, newCheck, id) {
+    document.querySelector('.spinner').style.display = 'flex';
+    try {
+        let mess;
+        const resp = await fetch(urlOtherRout, {
+            method: 'PATCH',
+            headers: httpHeaders,
+            body: JSON.stringify({
+                _id: id,
+                text: newText,
+                isCheck: newCheck
+            })
+        });
+        if (resp.status === 200) {
+            return resp;
+        } else {
+            mess = 'Ошибка сервера';
+            throw new Error;
+        }
+    } catch (error) {
+        alert(mess);
+    }
+}
+
+async function requestProcessingDelete(id) {
+    document.querySelector('.spinner').style.display = 'flex';
+    try {
+        let mess;
+        const resp = await fetch(urlOtherRout, {
+            method: 'DELETE',
+            headers: httpHeaders,
+            body: JSON.stringify({
+                _id: id
+            })
+        });
+        if (resp.status === 200) {
+            return resp;
+        } else {
+            mess = 'Ошибка сервера';
+            throw new Error;
+        }
+    } catch (error) {
+        alert(mess);
+    }
+}
+
+//Other
+
+function updateValue(event) {
+    valueInput = event.target.value;
+}
+
+async function addNewTask() {
+    const checkValue = valueInput.trim();
+    const blockInput = document.getElementById("data-entry");
+    const checkingValues = valueInput != '' && checkValue != '';
+
+    if (checkingValues) {
+        try {
+            const resp = await requestProcessingPost(checkValue);
+            if (resp.status === 200) {
+                blockInput.value = '';
+                blockInput.focus();
+                render()
+            } else {
+                throw new Error;
+            }
+        } catch (error) {
+            alert('Ошибка добавлении задачи');
+        }
+    }
+}
+
+async function onChangeCheckbox(item) {
+    item.isCheck = !item.isCheck;
+    try {
+        const resp = await requestProcessingPatch(item.text, item.isCheck, item._id);
+        if (resp.status === 200) {
+            render();
+        } else {
+            throw new Error;
+        }
+    } catch (error) {
+        alert('Ошибка изменения задачи');
+    }
+    render();
+}
+
+async function toChange(item, index) {
+    const blockDivLeft = document.getElementById(`leftBlockId=${index}`);
+    const getTextDiv = document.getElementById(`text=${index}`);
+    const blockInput = document.getElementById("data-entry");
+    const blockCheck = document.getElementById(`check-id=${index}`);
+
+    const blockDivRight = document.getElementById(`rightBlockId=${index}`);
+    const changeIcon = document.getElementById(`iconEdit=${index}`);
+    const deleteIcon = document.getElementById(`iconDelete=${index}`);
+
+    blockDivRight.removeChild(changeIcon);
+    blockDivRight.removeChild(deleteIcon);
+    blockDivLeft.removeChild(getTextDiv);
+    blockDivLeft.removeChild(blockCheck);
+
+    const introduceChanges = document.createElement('textarea');
+    introduceChanges.className = 'change-in-content';
+    introduceChanges.id = `input-text-id=${index}`;
+    introduceChanges.value = `${item.text}`;
+    introduceChanges.rows = `${Math.ceil(introduceChanges.value.length / 20)}`;
+    introduceChanges.focus();
+    introduceChanges.addEventListener('input', function () {
+        introduceChanges.style.height = 0;
+        introduceChanges.style.height = `${introduceChanges.scrollHeight}px`;
+    });
+
+    const submitButton = document.createElement('img');
+    submitButton.src = 'image/ok.png';
+    submitButton.alt = 'Картинка не найдена';
+    submitButton.className = 'icon-in-content';
+
+    const cancelButton = document.createElement('img');
+    cancelButton.src = 'image/cancel.png';
+    cancelButton.alt = 'Картинка не найдена';
+    cancelButton.className = 'icon-in-content';
+
+    blockDivRight.appendChild(submitButton);
+    blockDivRight.appendChild(cancelButton);
+    blockDivLeft.appendChild(introduceChanges);
+
+    submitButton.addEventListener('click', async () => sendingData(item, index, blockInput, blockDivLeft, introduceChanges));
+    cancelButton.addEventListener('click', () => render());
+
+    introduceChanges.focus();
+}
+
+async function sendingData(itemTask, indexTask, blockAddNewTask, innerBlock, blockChangeTask) {
+    const newTextValue = blockChangeTask.value.trim();
+    innerBlock.removeChild(blockChangeTask);
+
+    const blockText = document.createElement('p');
+    blockText.innerText = newTextValue;
+    blockText.className = 'text-task';
+    blockText.id = `text=${indexTask}`;
+
+    if (newTextValue.length) {
+        itemTask.text = newTextValue;
+        try {
+            const resp = await requestProcessingPatch(itemTask.text, itemTask.isCheck, itemTask._id);
+            if (resp.status === 200) {
+                render();
+            } else {
+                throw new Error;
+            }
+        } catch (error) {
+            alert('Ошибка изменения задачи');
+        }
+    } else {
+        // Если изменил на пустой, то возвращает предыдущие значение
+        blockText.innerText = itemTask.text;
+    }
+    innerBlock.appendChild(blockText);
+    blockAddNewTask.focus();
+    render();
+}
+
+async function toDelete(id) {
+    try {
+        const resp = await requestProcessingDelete(id);
+        if (resp.status === 200) {
+            render();
+        } else {
+            throw new Error;
+        }
+    } catch (error) {
+        alert('Ошибка удаления');
     }
 }
 
@@ -34,48 +234,18 @@ window.onload = async function init() {
     const blockInput = document.getElementById("data-entry");
     blockInput.addEventListener('change', updateValue);
     blockInput.focus();
-
-    const resp = await requestProcessing('http://localhost:8000/tasks', 'GET');
-    let result = await resp.json();
-    allTasks = result.data;
-
+    allTasks = await requestProcessingGet(allTasks);
     render();
 }
 
-async function onClickButton() {
-    const checkValue = valueInput.trim();
-    const blockInput = document.getElementById("data-entry");
-    if (valueInput != '' && checkValue != '') {
-        try {
-            const resp = await requestProcessing('http://localhost:8000/task', 'POST', {text: checkValue, isCheck: false});
-            if (resp.status === 200) {
-                const resp_all = await requestProcessing('http://localhost:8000/tasks', 'GET');
-                let result = await resp_all.json();
-                allTasks = result.data;
-            } else {
-                throw new Error;
-            }
-        } catch (error) {
-            alert('Ошибка добавлении задачи');
-        }
-
-        valueInput = '';
-        blockInput.value = '';
-        blockInput.focus();
-
-        render();
-    }
-}
-
-render = () => {
-    allTasks.sort((task1, task2) => task1.id > task2.id ? 1 : -1);
+render = async () => {
+    allTasks = await requestProcessingGet(allTasks);
+    allTasks.sort((task1, task2) => task1._id > task2._id ? 1 : -1);
     allTasks.sort((task1, task2) => task1['isCheck'] > task2['isCheck'] ? 1 : -1);
 
     const content = document.getElementById('container-with-content');
+    content.innerHTML = "";
 
-    while (content.firstChild) {
-        content.removeChild(content.firstChild);
-    }
     allTasks.forEach((item, index) => {
         const container = document.createElement('li');
         container.id = `task=${index}`;
@@ -135,124 +305,4 @@ render = () => {
         content.appendChild(container);
     })
     document.querySelector('.spinner').style.display = 'none';
-}
-
-async function onChangeCheckbox(item) {
-    item.isCheck = !item.isCheck;
-
-    try {
-        const resp = await requestProcessing(`http://localhost:8000/task?_id=${item._id}`, 'PATCH', {text: item.text, isCheck: item.isCheck});
-        if (resp.status === 200) {
-            const resp_all = await requestProcessing('http://localhost:8000/tasks', 'GET');    
-            let result = await resp_all.json();
-            allTasks = result.data;
-        } else {
-            throw new Error;
-        }
-    } catch (error) {
-        alert('Ошибка изменения задачи');
-    }
-
-    render();
-}
-
-async function toChange(item, index) {
-    const blockDivLeft = document.getElementById(`leftBlockId=${index}`);
-    const getTextDiv = document.getElementById(`text=${index}`);
-    const blockInput = document.getElementById("data-entry");
-    const blockCheck = document.getElementById(`check-id=${index}`);
-
-    const blockDivRight = document.getElementById(`rightBlockId=${index}`);
-    const changeIcon = document.getElementById(`iconEdit=${index}`);
-    const deleteIcon = document.getElementById(`iconDelete=${index}`);
-
-    blockDivRight.removeChild(changeIcon);
-    blockDivRight.removeChild(deleteIcon);
-    blockDivLeft.removeChild(getTextDiv);
-    blockDivLeft.removeChild(blockCheck);
-
-    const introduceChanges = document.createElement('textarea');
-    introduceChanges.className = 'change-in-content';
-    introduceChanges.id = `input-text-id=${index}`;
-    introduceChanges.value = `${item.text}`;
-    introduceChanges.rows = `${Math.ceil(introduceChanges.value.length / 20)}`;
-    introduceChanges.focus();
-    introduceChanges.addEventListener('input', function () {
-        introduceChanges.style.height = 0;
-        introduceChanges.style.height = `${introduceChanges.scrollHeight}px`;
-    })
-
-    const imageOk = document.createElement('img');
-    imageOk.src = 'image/ok.png';
-    imageOk.alt = 'Картинка не найдена';
-    imageOk.className = 'icon-in-content';
-
-    const imageCancel = document.createElement('img');
-    imageCancel.src = 'image/cancel.png';
-    imageCancel.alt = 'Картинка не найдена';
-    imageCancel.className = 'icon-in-content';
-
-    blockDivRight.appendChild(imageOk);
-    blockDivRight.appendChild(imageCancel);
-    blockDivLeft.appendChild(introduceChanges);
-
-    imageOk.addEventListener('click', async function () {
-        const newTextValue = introduceChanges.value.trim();
-        blockDivLeft.removeChild(introduceChanges);
-
-        const blockText = document.createElement('p');
-        blockText.innerText = newTextValue;
-        blockText.className = 'text-task';
-        blockText.id = `text=${index}`;
-
-        if (newTextValue.length != 0) {
-            item.text = newTextValue;
-            try {
-                const resp = await requestProcessing(`http://localhost:8000/task?_id=${item._id}`, 'PATCH', {text: item.text, isCheck: item.isCheck});
-                if (resp.status === 200) {
-                    const resp_all = await requestProcessing('http://localhost:8000/tasks', 'GET');    
-                    let result = await resp_all.json();
-                    allTasks = result.data;
-                } else {
-                    throw new Error;
-                }
-            } catch (error) {
-                alert('Ошибка изменения задачи');
-            }
-
-            blockDivLeft.appendChild(blockText);
-            blockInput.focus();
-            render();
-        } else {
-            // Если изменил на пустой, то возвращает предыдущие значение
-            blockText.innerText = item.text;
-            blockDivLeft.appendChild(blockText);
-            blockInput.focus();
-            render();
-        }
-    })
-
-    imageCancel.addEventListener('click', function () {
-        render();
-    });
-
-    introduceChanges.focus();
-}
-
-
-async function toDelete(id) {
-    try {
-        const resp = await requestProcessing(`http://localhost:8000/task?_id=${id}`, 'DELETE');
-        if (resp.status === 200) {
-            const resp_all = await requestProcessing('http://localhost:8000/tasks', 'GET');    
-            let result = await resp_all.json();
-            allTasks = result.data;
-        } else {
-            throw new Error;
-        }
-    } catch (error) {
-        alert('Ошибка удаления');
-    }
-
-    render();
 }
