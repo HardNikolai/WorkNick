@@ -116,7 +116,7 @@ async function addNewTask() {
             if (resp.status === 200) {
                 blockInput.value = '';
                 blockInput.focus();
-                render()
+                render();
             } else {
                 throw new Error;
             }
