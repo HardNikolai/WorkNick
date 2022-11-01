@@ -26,7 +26,7 @@ async function requestProcessingGet(db) {
             throw new Error;
         }
     } catch (error) {
-        alert(mess);
+        builderBlockError(mess);
     }
 }
 
@@ -49,7 +49,7 @@ async function requestProcessingPost(newValue) {
             throw new Error;
         }
     } catch (error) {
-        alert(mess);
+        builderBlockError(mess);
     }
 }
 
@@ -73,7 +73,7 @@ async function requestProcessingPatch(newText, newCheck, id) {
             throw new Error;
         }
     } catch (error) {
-        alert(mess);
+        await builderBlockError(mess);
     }
 }
 
@@ -95,7 +95,7 @@ async function requestProcessingDelete(id) {
             throw new Error;
         }
     } catch (error) {
-        alert(mess);
+        builderBlockError(mess);
     }
 }
 
@@ -103,6 +103,18 @@ async function requestProcessingDelete(id) {
 
 function updateValue(event) {
     valueInput = event.target.value;
+}
+
+async function builderBlockError(message) {
+    const blockError = document.getElementById('main-error');
+    const blockMessage = document.getElementById('message-error');
+    blockError.className = "block-error-on";
+
+    setTimeout(() => {
+        blockError.className = "block-error-off";
+    }, 3000);
+
+    blockMessage.innerText = message;
 }
 
 async function addNewTask() {
@@ -121,7 +133,7 @@ async function addNewTask() {
                 throw new Error;
             }
         } catch (error) {
-            alert('Ошибка добавлении задачи');
+            builderBlockError('Ошибка добавлении задачи');
         }
     }
 }
@@ -136,7 +148,7 @@ async function onChangeCheckbox(item) {
             throw new Error;
         }
     } catch (error) {
-        alert('Ошибка изменения задачи');
+        await builderBlockError('Ошибка изменения задачи');
     }
     render();
 }
@@ -181,7 +193,7 @@ async function toChange(item, index) {
     blockDivRight.appendChild(cancelButton);
     blockDivLeft.appendChild(introduceChanges);
 
-    submitButton.addEventListener('click', async () => sendingData(item, index, blockInput, blockDivLeft, introduceChanges));
+    submitButton.addEventListener('click', async () => await sendingData(item, index, blockInput, blockDivLeft, introduceChanges));
     cancelButton.addEventListener('click', () => render());
 
     introduceChanges.focus();
@@ -206,7 +218,7 @@ async function sendingData(itemTask, indexTask, blockAddNewTask, innerBlock, blo
                 throw new Error;
             }
         } catch (error) {
-            alert('Ошибка изменения задачи');
+            builderBlockError('Ошибка изменения задачи');
         }
     } else {
         // Если изменил на пустой, то возвращает предыдущие значение
@@ -226,7 +238,7 @@ async function toDelete(id) {
             throw new Error;
         }
     } catch (error) {
-        alert('Ошибка удаления');
+        builderBlockError('Ошибка удаления');
     }
 }
 
