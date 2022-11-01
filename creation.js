@@ -5,7 +5,6 @@ let input_place = null;
 let input_expenses = null;
 const getUrl = 'http://localhost:8000/tasks';
 const otherUrl = 'http://localhost:8000/task';
-const options = {day: 'numeric', month: 'numeric', year: 'numeric'};
 const httpHeaders = {
     'Content-Type': 'application/json;charset=utf-8',
     'Access-Control-Allow-Origin': '*'
@@ -14,6 +13,7 @@ let today = new Date();
 let allSum = 0;
 let mess;
 
+// requestProcessing
 async function requestProcessingGet(db) {
     try {
         const resp = await fetch(getUrl, {
@@ -29,10 +29,9 @@ async function requestProcessingGet(db) {
             throw new Error;
         } 
     } catch (error) {
-        alert(mess);
+        bilderBlockError(mess);
     }
 }
-
 
 async function requestProcessingPost(newTask) {
     try {
@@ -52,7 +51,7 @@ async function requestProcessingPost(newTask) {
             throw new Error;
         } 
     } catch (error) {
-        alert(mess);
+        bilderBlockError(mess);
     }
 }
 
@@ -75,10 +74,31 @@ async function requestProcessingPatch(id, newTask) {
             throw new Error;
         } 
     } catch (error) {
-        alert(mess);
+        bilderBlockError(mess);
     }
 }
 
+async function requestProcessingDelete(id) {
+    try {
+        const resp = await fetch(otherUrl, {
+        method: 'DELETE',
+        headers: httpHeaders,
+        body: JSON.stringify({
+            _id: id
+            })
+        });
+        if (resp.status === 200) {
+            return resp;
+        } else {
+            mess = 'Ошибка сервера';
+            throw new Error;
+        } 
+    } catch (error) {
+        bilderBlockError(mess);
+    }
+}
+
+// other
 function updateValueFirst(event) {
     valueInputPlace = event.target.value;
 }
@@ -94,9 +114,28 @@ function clearValue() {
     input_expenses.value = '';
 }
 
+function bilderBlockError(message) {
+    const blockError = document.getElementById("errorIdBlock");
+    blockError.className = 'error-block-on';
+
+    const textError = document.getElementById("error-message-id");
+    textError.innerText = message;
+
+    setTimeout(() => {
+        blockError.className = "error-block";
+    }, 2500);
+}
+
 async function addNewTask() {
     const checkValuePlace = valueInputPlace.trim();
     const num = Number(Number(valueInputCost).toFixed(2));
+
+    const blockMops = document.getElementById("buttonMops");
+    blockMops.className = "mops-button-on";
+
+    setTimeout(() => {
+        blockMops.className = "mops-button";
+    }, 2000);
 
     if (num >= 0 && checkValuePlace.length) {
         const objData = {
@@ -112,14 +151,164 @@ async function addNewTask() {
                 throw new Error;
             }
         } catch (error) {
-            alert('Ошибка добавления задачи');
+            bilderBlockError('Ошибка добавления задачи');
         }
-        clearValue();
     } else {
-        alert('Неверный формат данных')
+        bilderBlockError('Неверный формат данных');
+    }
+    clearValue();
+}
+
+async function sendData(block, innerBlock, textPlace, textDate, textCost, index, task) {
+    let bulTextDate;
+    const newTextPlaceValue = textPlace.value.trim();
+    const newTextDateValue = textDate.valueAsDate;
+    const checkDate = new Date(newTextDateValue) <= new Date() && new Date(newTextDateValue) >= new Date(1970);
+
+    const newTextExpensesValue = textCost.value.trim();
+    const blockTextPlace = document.createElement('p');
+    blockTextPlace.innerText = newTextPlaceValue;
+    blockTextPlace.className = 'text_place';
+    blockTextPlace.id = `text-place-id=${index}`;
+
+    const blockTextDate = document.createElement('p');
+    blockTextDate.className = 'text_date';
+    blockTextDate.id = `date-id=${index}`;
+
+    const blockTextExpenses = document.createElement('p');
+    blockTextExpenses.innerText = newTextExpensesValue;
+    blockTextExpenses.className = 'text_expenses';
+    blockTextExpenses.id = `text-expenses-id=${index}`;
+
+    const bulTextPlace = newTextPlaceValue.length != 0;
+    if (newTextDateValue != null) {
+       bulTextDate = newTextDateValue.length != 0;        
+    }
+
+    const bulTextExpenses = newTextExpensesValue.length != 0 && newTextExpensesValue >= 0;
+    const checkNewInput = bulTextPlace && bulTextDate && bulTextExpenses && checkDate;
+
+
+    if (checkNewInput) {
+        task.place = newTextPlaceValue;
+        task.date = newTextDateValue;
+        task.cost = newTextExpensesValue;
+        const objData = {
+            place: task.place,
+            cost: task.cost,
+            date: task.date
+        }
+        try {
+            const resp = await requestProcessingPatch(task._id, objData);
+            if (resp.status === 200) {
+                render();
+            } else {
+                throw new Error;
+            }
+        } catch (error) {
+            bilderBlockError('Ошибка изменения задачи');
+        }
+    } else {
+        // Если изменил на пустой, то возвращает предыдущие значение
+        blockTextPlace.innerText = task.place;
+        blockTextDate.innerText = task.data;
+        blockTextExpenses.innerText = task.cost;
+        render();
+    }
+    block.removeChild(textPlace);
+    innerBlock.removeChild(textDate);
+    innerBlock.removeChild(textCost);
+
+    block.appendChild(blockTextPlace);
+    innerBlock.appendChild(blockTextDate);
+    innerBlock.appendChild(blockTextExpenses);
+}
+
+async function toChange(item, index) {
+    await render();
+    const blockDivLeft = document.getElementById(`leftBlockId=${index}`);
+    const getTextLeftDiv = document.getElementById(`text-place-id=${index}`);
+
+    const blockLeftInnerContent = document.getElementById(`left-inner-content-id=${index}`);
+    const blockRightInnerContent = document.getElementById(`right-inner-content-id=${index}`);
+
+    const changeIcon = document.getElementById(`iconEdit=${index}`);
+    const deleteIcon = document.getElementById(`iconDelete=${index}`);
+    const getTextDate = document.getElementById(`date-id=${index}`);
+    const getTextRightDiv = document.getElementById(`text-expenses-id=${index}`);
+
+    blockRightInnerContent.removeChild(changeIcon);
+    blockRightInnerContent.removeChild(deleteIcon);
+    blockDivLeft.removeChild(getTextLeftDiv);
+    blockLeftInnerContent.removeChild(getTextDate);
+    blockLeftInnerContent.removeChild(getTextRightDiv);
+
+    const introduceChangesPlace = document.createElement('textarea');
+    introduceChangesPlace.className = 'change-in-textPlace';
+    introduceChangesPlace.id = `input-textPlace-id=${index}`;
+    introduceChangesPlace.value = `${item.place}`;
+    introduceChangesPlace.rows = `${Math.ceil(introduceChangesPlace.value.length / 20)}`;
+    introduceChangesPlace.addEventListener('input', function () {
+        introduceChangesPlace.style.height = 0;
+        introduceChangesPlace.style.height = `${introduceChangesPlace.scrollHeight}px`;
+    });
+
+    const introduceChangesDate = document.createElement('input');
+    introduceChangesDate.className = 'change-in-textDate';
+    introduceChangesDate.id = `input-textDate-id=${index}`;
+    introduceChangesDate.type = 'date';
+    introduceChangesDate.valueAsDate = new Date(item.date);
+
+    const introduceChangesExpenses = document.createElement('input');
+    introduceChangesExpenses.className = 'change-in-textExpenses';
+    introduceChangesExpenses.id = `input-textExpenses-id=${index}`;
+    introduceChangesExpenses.type = 'number';
+    introduceChangesExpenses.value = item.cost;
+    introduceChangesExpenses.rows = `${Math.ceil(introduceChangesExpenses.value.length / 20)}`;
+
+    const sendButton = document.createElement('img');
+    sendButton.src = 'image/ok.png';
+    sendButton.alt = 'Картинка не найдена';
+    sendButton.className = 'icon-in-content';
+
+    const cancelButton = document.createElement('img');
+    cancelButton.src = 'image/cancel.png';
+    cancelButton.alt = 'Картинка не найдена';
+    cancelButton.className = 'icon-in-content';
+
+    blockDivLeft.appendChild(introduceChangesPlace);
+
+    blockLeftInnerContent.appendChild(introduceChangesDate);
+    blockLeftInnerContent.appendChild(introduceChangesExpenses);
+    blockRightInnerContent.appendChild(sendButton);
+    blockRightInnerContent.appendChild(cancelButton);
+    
+
+    sendButton.addEventListener('click', async () => sendData(blockDivLeft, blockLeftInnerContent, introduceChangesPlace, introduceChangesDate, introduceChangesExpenses, index, item));
+    cancelButton.addEventListener('click', () => render());
+}
+
+async function toDelete(id) {
+    try {
+        const resp = await requestProcessingDelete(id);
+        if (resp.status === 200) {
+            render();
+        } else {
+            throw new Error;
+        }
+    } catch (error) {
+        bilderBlockError('Ошибка удаления');
     }
 }
 
+function fullAmount(db) {
+    let allSum = 0;
+    db.forEach((item) => {
+        allSum += item.cost;
+    });
+    return allSum;
+
+}
 
 window.onload = async function init() {
     input_place = document.getElementById('data-place');
@@ -135,10 +324,12 @@ window.onload = async function init() {
 
 render = async () => {
     allTasks = await requestProcessingGet(allTasks);
-    allSum = 0;
     const content = document.getElementById('container-with-content');
     const getBlockSum = document.getElementById('total');
-    getBlockSum.innerText = `Итого: ${allSum}р.`;
+
+    getBlockSum.innerText = `Итого: ${fullAmount(allTasks)}р.`;
+
+
 
     content.innerHTML = '';
 
@@ -215,171 +406,5 @@ render = async () => {
         rightInnerContainer.appendChild(imageDelete);
 
         content.appendChild(container);
-
-        allSum += item.cost;
-        getBlockSum.innerText = `Итого: ${allSum}р.`;
     });
-}
-
-function toChange(item, index) {
-    render();
-    const blockDivLeft = document.getElementById(`leftBlockId=${index}`);
-    const getTextLeftDiv = document.getElementById(`text-place-id=${index}`);
-
-    const blockLeftInnerContent = document.getElementById(`left-inner-content-id=${index}`);
-    const blockRightInnerContent = document.getElementById(`right-inner-content-id=${index}`);
-
-    const changeIcon = document.getElementById(`iconEdit=${index}`);
-    const deleteIcon = document.getElementById(`iconDelete=${index}`);
-    const getTextDate = document.getElementById(`date-id=${index}`);
-    const getTextRightDiv = document.getElementById(`text-expenses-id=${index}`);
-
-    blockRightInnerContent.removeChild(changeIcon);
-    blockRightInnerContent.removeChild(deleteIcon);
-    blockDivLeft.removeChild(getTextLeftDiv);
-    blockLeftInnerContent.removeChild(getTextDate);
-    blockLeftInnerContent.removeChild(getTextRightDiv);
-
-    const introduceChangesPlace = document.createElement('textarea');
-    introduceChangesPlace.className = 'change-in-textPlace';
-    introduceChangesPlace.id = `input-textPlace-id=${index}`;
-    introduceChangesPlace.value = `${item.place}`;
-    introduceChangesPlace.rows = `${Math.ceil(introduceChangesPlace.value.length / 20)}`;
-    introduceChangesPlace.addEventListener('input', function () {
-        introduceChangesPlace.style.height = 0;
-        introduceChangesPlace.style.height = `${introduceChangesPlace.scrollHeight}px`;
-    });
-
-    const introduceChangesDate = document.createElement('input');
-    introduceChangesDate.className = 'change-in-textDate';
-    introduceChangesDate.id = `input-textDate-id=${index}`;
-    introduceChangesDate.type = 'date';
-    introduceChangesDate.valueAsDate = new Date(item.date);
-
-    const introduceChangesExpenses = document.createElement('input');
-    introduceChangesExpenses.className = 'change-in-textExpenses';
-    introduceChangesExpenses.id = `input-textExpenses-id=${index}`;
-    introduceChangesExpenses.type = 'number';
-    introduceChangesExpenses.value = item.cost;
-    introduceChangesExpenses.rows = `${Math.ceil(introduceChangesExpenses.value.length / 20)}`;
-
-    const imageOk = document.createElement('img');
-    imageOk.src = 'image/ok.png';
-    imageOk.alt = 'Картинка не найдена';
-    imageOk.className = 'icon-in-content';
-
-    const imageCancel = document.createElement('img');
-    imageCancel.src = 'image/cancel.png';
-    imageCancel.alt = 'Картинка не найдена';
-    imageCancel.className = 'icon-in-content';
-
-    blockDivLeft.appendChild(introduceChangesPlace);
-
-    blockLeftInnerContent.appendChild(introduceChangesDate);
-    blockLeftInnerContent.appendChild(introduceChangesExpenses);
-    blockRightInnerContent.appendChild(imageOk);
-    blockRightInnerContent.appendChild(imageCancel);
-    
-
-    imageOk.addEventListener('click', async function () {
-        let bulTextDate;
-        const newTextPlaceValue = introduceChangesPlace.value.trim();
-        const newTextDateValue = introduceChangesDate.valueAsDate;
-        const checkDate = new Date(newTextDateValue) <= new Date() && new Date(newTextDateValue) >= new Date(1970);
-
-        const newTextExpensesValue = introduceChangesExpenses.value.trim();
-        const blockTextPlace = document.createElement('p');
-        blockTextPlace.innerText = newTextPlaceValue;
-        blockTextPlace.className = 'text_place';
-        blockTextPlace.id = `text-place-id=${index}`;
-
-        const blockTextDate = document.createElement('p');
-        blockTextDate.innerText = newTextDateValue;
-        blockTextDate.className = 'text_date';
-        blockTextDate.id = `date-id=${index}`;
-
-        const blockTextExpenses = document.createElement('p');
-        blockTextExpenses.innerText = newTextExpensesValue;
-        blockTextExpenses.className = 'text_expenses';
-        blockTextExpenses.id = `text-expenses-id=${index}`;
-
-        const bulTextPlace = newTextPlaceValue.length != 0;
-
-        if (newTextDateValue != null) {
-           bulTextDate = newTextDateValue.length != 0;        
-        }
-
-        const bulTextExpenses = newTextExpensesValue.length != 0 && newTextExpensesValue >= 0;
-        const checkNewInput = bulTextPlace && bulTextDate && bulTextExpenses && checkDate;
-
-
-        if (checkNewInput) {
-            item.place = newTextPlaceValue;
-            item.date = newTextDateValue;
-            item.cost = newTextExpensesValue;
-            const objData = {
-                place: item.place,
-                cost: item.cost,
-                date: item.date
-            }
-            
-            try {
-                const resp = await requestProcessingPatch(item._id, objData);
-                if (resp.status === 200) {
-
-                } else {
-                    throw new Error;
-                }
-            } catch (error) {
-                alert('Ошибка изменения задачи');
-            }
-            blockDivLeft.removeChild(introduceChangesPlace);
-            blockLeftInnerContent.removeChild(introduceChangesDate);
-            blockLeftInnerContent.removeChild(introduceChangesExpenses);
-
-            blockDivLeft.appendChild(blockTextPlace);
-            blockLeftInnerContent.appendChild(blockTextDate);
-            blockLeftInnerContent.appendChild(blockTextExpenses);
-            // render();
-        } else {
-            // Если изменил на пустой, то возвращает предыдущие значение
-            blockTextPlace.innerText = item.place;
-            blockTextDate.innerText = item.data;
-            blockTextExpenses.innerText = item.cost;
-
-            blockDivLeft.removeChild(introduceChangesPlace);
-            blockLeftInnerContent.removeChild(introduceChangesDate);
-            blockLeftInnerContent.removeChild(introduceChangesExpenses);
-
-            blockDivLeft.appendChild(blockTextPlace);
-
-            blockLeftInnerContent.appendChild(blockTextDate);
-            blockLeftInnerContent.appendChild(blockTextExpenses);
-            // render();
-        }
-    })
-
-    imageCancel.addEventListener('click', function () {
-        render();
-    });
-}
-
-
-async function toDelete(id) {
-    try {
-        const resp = await requestProcessing(`http://localhost:8000/task?_id=${id}`, 'DELETE');
-        if (resp.status === 200) {
-            const resp_all = await requestProcessing('http://localhost:8000/tasks', 'GET');    
-            let result = await resp_all.json();
-            allTasks = result.data;
-        } else {
-            throw new Error;
-        }
-    } catch (error) {
-        alert('Ошибка удаления');
-    }
-
-    render();
-    
-    return allTasks;
 }

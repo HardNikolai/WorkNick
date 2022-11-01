@@ -3,7 +3,8 @@
 }
 
 body {
-    background-color: #c5e7ff;
+    height: 400px;
+    background: url('image/mops.jpg') 100%;
 }
 
 ul {
@@ -14,6 +15,17 @@ li {
     list-style-type: none;
 }
 
+.main__block {
+    padding-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+.block__accounting {
+    background-color: rgba(255, 255, 255, 0.274);
+    width: 1000px;
+    border-radius: 30px;
+}
 
 .block-header {
     padding-top: 10px;
@@ -47,6 +59,10 @@ li {
 }
 
 .text-place {
+    border: 0;
+    outline: 0;
+    border-radius: 30px;
+    background-color: rgba(146, 146, 146, 0.171);
     width: 300px;
     height: 50px;
     font-size: 30px;
@@ -54,9 +70,14 @@ li {
     margin-bottom: 10px;
     font-family: cursive;
     font-weight: 100;
+    padding-left: 30px;
 }
 
 .text-expenses {
+    border: 0;
+    outline: 0;
+    border-radius: 30px;
+    background-color: rgba(146, 146, 146, 0.171);
     margin-top: 10px;
     margin-bottom: 10px;
     width: 330px;
@@ -64,13 +85,46 @@ li {
     font-size: 30px;
     font-family: cursive;
     font-weight: 100;
+    padding-left: 30px;
+}
+
+.block-button {
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.error-block {
+    display: none;
+}
+
+.error-block-on {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.mops-error {
+    width: 50px;
+}
+
+.mops-button {
+    width: 70px;
+}
+
+.mops-button-on {
+    width: 70px;
+    animation: mops-button 2s linear infinite;
 }
 
 .add-a-list {
+    border: 0;
     font-size: 20px;
     font-family: cursive;
     font-weight: 100;
-    background-color: #49b78d;
+    background-color: rgba(146, 146, 146, 0.171);
     height: 50px;
     width: 130px;
     margin-top: 30px;
@@ -78,6 +132,7 @@ li {
 
 .container {
     margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -172,6 +227,15 @@ li {
     font-size: 20px;
     width: 82px;
     height: 22px;
+}
+
+@keyframes mops-button {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media(max-width:860px) {

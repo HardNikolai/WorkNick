@@ -36,10 +36,8 @@ module.exports.createNewTask = async (req, res, next) => {
 module.exports.changeTaskInfo = async (req, res, next) => {
     try {
         const [place, cost, date, id] = [req.body.place, Number(req.body.cost), new Date(req.body.date), req.body._id];
-        const checkPrice = Number(req.body.cost) >= 0;
         const checkDateFormat = date.toString() === 'Invalid Date' || date >= new Date() || date <= new Date(1970);
-
-        if (checkPrice) {
+        if (cost >= 0) {
             if (checkDateFormat) {
                 res.status(400).send({message: 'Ошибка ввода даты. Формат ввода: "2022-12-31'});
             }
@@ -57,7 +55,7 @@ module.exports.changeTaskInfo = async (req, res, next) => {
 
 module.exports.deleteTask = async (req, res, next) => {
     try {
-        const id = req.query._id;
+        const id = req.body._id;
         const task = await Task.findById(id);
         await Task.deleteOne({_id: id});
         res.status(200).send(task);
