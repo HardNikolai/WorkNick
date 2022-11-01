@@ -1,10 +1,12 @@
 let allTasks = [];
-let valueInputFirst = '';
-let valueInputSecond = '';
+let valueInputPlace = '';
+let valueInputCost = '';
 let input_place = null;
 let input_expenses = null;
+const getUrl = 'http://localhost:8000/tasks';
+const otherUrl = 'http://localhost:8000/task';
 const options = {day: 'numeric', month: 'numeric', year: 'numeric'};
-const HTTP_HEADERS = {
+const httpHeaders = {
     'Content-Type': 'application/json;charset=utf-8',
     'Access-Control-Allow-Origin': '*'
 }
@@ -12,20 +14,36 @@ let today = new Date();
 let allSum = 0;
 let mess;
 
-function updateValueFirst(event) {
-    valueInputFirst = event.target.value;
-}
-
-function updateValueSecond(event) {
-    valueInputSecond = event.target.value;
-}
-
-async function requestProcessing(url, method, obj) {
+async function requestProcessingGet(db) {
     try {
-        const resp = await fetch(url, {
-        method: method,
-        headers: HTTP_HEADERS,
-        body: JSON.stringify(obj)
+        const resp = await fetch(getUrl, {
+        method: 'GET',
+        headers: httpHeaders
+        });
+        if (resp.status === 200) {
+            let result = await resp.json();
+            db = result.data;
+            return db;
+        } else {
+            mess = 'Ошибка сервера';
+            throw new Error;
+        } 
+    } catch (error) {
+        alert(mess);
+    }
+}
+
+
+async function requestProcessingPost(newTask) {
+    try {
+        const resp = await fetch(otherUrl, {
+        method: 'POST',
+        headers: httpHeaders,
+        body: JSON.stringify({
+            place: newTask.place,
+            cost: newTask.cost,
+            date: newTask.date
+            })
         });
         if (resp.status === 200) {
             return resp;
@@ -38,6 +56,71 @@ async function requestProcessing(url, method, obj) {
     }
 }
 
+async function requestProcessingPatch(id, newTask) {
+    try {
+        const resp = await fetch(otherUrl, {
+        method: 'PATCH',
+        headers: httpHeaders,
+        body: JSON.stringify({
+            _id: id,
+            place: newTask.place,
+            cost: newTask.cost,
+            date: newTask.date
+            })
+        });
+        if (resp.status === 200) {
+            return resp;
+        } else {
+            mess = 'Ошибка сервера';
+            throw new Error;
+        } 
+    } catch (error) {
+        alert(mess);
+    }
+}
+
+function updateValueFirst(event) {
+    valueInputPlace = event.target.value;
+}
+
+function updateValueSecond(event) {
+    valueInputCost = event.target.value;
+}
+
+function clearValue() {
+    valueInputPlace = '';
+    valueInputCost = '';
+    input_place.value = '';
+    input_expenses.value = '';
+}
+
+async function addNewTask() {
+    const checkValuePlace = valueInputPlace.trim();
+    const num = Number(Number(valueInputCost).toFixed(2));
+
+    if (num >= 0 && checkValuePlace.length) {
+        const objData = {
+            place: checkValuePlace,
+            cost: num,
+            date: today
+        }
+        try {
+            const resp = await requestProcessingPost(objData);
+            if (resp.status === 200) {
+                render();
+            } else {
+                throw new Error;
+            }
+        } catch (error) {
+            alert('Ошибка добавления задачи');
+        }
+        clearValue();
+    } else {
+        alert('Неверный формат данных')
+    }
+}
+
+
 window.onload = async function init() {
     input_place = document.getElementById('data-place');
     input_place.addEventListener('change', updateValueFirst);
@@ -45,55 +128,19 @@ window.onload = async function init() {
     input_expenses = document.getElementById('data-expenses');
     input_expenses.addEventListener('change', updateValueSecond);
 
-    const resp = await requestProcessing('http://localhost:8000/tasks', 'GET');
-    let result = await resp.json();
-    allTasks = result.data;
-
+    allTasks = await requestProcessingGet(allTasks);
     render();
 }
 
-async function onClickButton() {
-    const checkValueFirst = valueInputFirst.trim();
-    const checkValueSecond = valueInputSecond.trim();
-    const num = Number(Number(checkValueSecond).toFixed(2));
 
-    if (num >= 0) {
-        const objData = {
-            text_place: checkValueFirst,
-            text_expenses: num,
-            date: today
-        }
-        try {
-            const resp = await requestProcessing('http://localhost:8000/task', 'POST', objData);
-            if (resp.status === 200) {
-                const resp_all = await requestProcessing('http://localhost:8000/tasks', 'GET');
-                let result = await resp_all.json();
-                allTasks = result.data;
-            } else {
-                throw new Error;
-            }
-        } catch (error) {
-            alert('Ошибка добавления задачи');
-        }
-        valueInputFirst = '';
-        valueInputSecond = '';
-        input_place.value = '';
-        input_expenses.value = '';
-        render();
-    } else {
-        alert('Сумма меньше 0')
-    }
-}
-
-render = () => {
+render = async () => {
+    allTasks = await requestProcessingGet(allTasks);
     allSum = 0;
     const content = document.getElementById('container-with-content');
     const getBlockSum = document.getElementById('total');
     getBlockSum.innerText = `Итого: ${allSum}р.`;
 
-    while (content.firstChild) {
-        content.removeChild(content.firstChild);
-    }
+    content.innerHTML = '';
 
     allTasks.forEach((item, index) => {
         const container = document.createElement('li');
@@ -111,7 +158,7 @@ render = () => {
         leftBlockContainer.appendChild(text_number);
 
         const text_place = document.createElement('p');
-        text_place.innerText = `${item.text_place}`;
+        text_place.innerText = `${item.place}`;
         text_place.id = `text-place-id=${index}`;
         text_place.className = `text_place`;
         leftBlockContainer.appendChild(text_place);
@@ -141,7 +188,7 @@ render = () => {
         const text_expenses = document.createElement('p');
         text_expenses.className = 'text_expenses';
         text_expenses.id = `text-expenses-id=${index}`;
-        text_expenses.innerText = `${item.text_expenses} р.`;
+        text_expenses.innerText = `${item.cost} р.`;
         leftInnerContainer.appendChild(text_expenses);
 
         const imageEdit = document.createElement('img');
@@ -169,12 +216,13 @@ render = () => {
 
         content.appendChild(container);
 
-        allSum += item.text_expenses;
+        allSum += item.cost;
         getBlockSum.innerText = `Итого: ${allSum}р.`;
     });
 }
 
 function toChange(item, index) {
+    render();
     const blockDivLeft = document.getElementById(`leftBlockId=${index}`);
     const getTextLeftDiv = document.getElementById(`text-place-id=${index}`);
 
@@ -195,7 +243,7 @@ function toChange(item, index) {
     const introduceChangesPlace = document.createElement('textarea');
     introduceChangesPlace.className = 'change-in-textPlace';
     introduceChangesPlace.id = `input-textPlace-id=${index}`;
-    introduceChangesPlace.value = `${item.text_place}`;
+    introduceChangesPlace.value = `${item.place}`;
     introduceChangesPlace.rows = `${Math.ceil(introduceChangesPlace.value.length / 20)}`;
     introduceChangesPlace.addEventListener('input', function () {
         introduceChangesPlace.style.height = 0;
@@ -205,14 +253,14 @@ function toChange(item, index) {
     const introduceChangesDate = document.createElement('input');
     introduceChangesDate.className = 'change-in-textDate';
     introduceChangesDate.id = `input-textDate-id=${index}`;
-    introduceChangesDate.type = 'date'
+    introduceChangesDate.type = 'date';
     introduceChangesDate.valueAsDate = new Date(item.date);
 
     const introduceChangesExpenses = document.createElement('input');
     introduceChangesExpenses.className = 'change-in-textExpenses';
     introduceChangesExpenses.id = `input-textExpenses-id=${index}`;
     introduceChangesExpenses.type = 'number';
-    introduceChangesExpenses.value = item.text_expenses;
+    introduceChangesExpenses.value = item.cost;
     introduceChangesExpenses.rows = `${Math.ceil(introduceChangesExpenses.value.length / 20)}`;
 
     const imageOk = document.createElement('img');
@@ -234,10 +282,12 @@ function toChange(item, index) {
     
 
     imageOk.addEventListener('click', async function () {
+        let bulTextDate;
         const newTextPlaceValue = introduceChangesPlace.value.trim();
         const newTextDateValue = introduceChangesDate.valueAsDate;
-        const newTextExpensesValue = introduceChangesExpenses.value.trim();
+        const checkDate = new Date(newTextDateValue) <= new Date() && new Date(newTextDateValue) >= new Date(1970);
 
+        const newTextExpensesValue = introduceChangesExpenses.value.trim();
         const blockTextPlace = document.createElement('p');
         blockTextPlace.innerText = newTextPlaceValue;
         blockTextPlace.className = 'text_place';
@@ -254,25 +304,29 @@ function toChange(item, index) {
         blockTextExpenses.id = `text-expenses-id=${index}`;
 
         const bulTextPlace = newTextPlaceValue.length != 0;
-        const bulTextDate = newTextDateValue.length != 0;
-        const bulTextExpenses = newTextExpensesValue.length != 0;
 
-        if (bulTextPlace && bulTextDate && bulTextExpenses) {
-            item.text_place = newTextPlaceValue;
+        if (newTextDateValue != null) {
+           bulTextDate = newTextDateValue.length != 0;        
+        }
+
+        const bulTextExpenses = newTextExpensesValue.length != 0 && newTextExpensesValue >= 0;
+        const checkNewInput = bulTextPlace && bulTextDate && bulTextExpenses && checkDate;
+
+
+        if (checkNewInput) {
+            item.place = newTextPlaceValue;
             item.date = newTextDateValue;
-            item.text_expenses = newTextExpensesValue;
+            item.cost = newTextExpensesValue;
             const objData = {
-                text_place: item.text_place,
-                text_expenses: item.text_expenses,
+                place: item.place,
+                cost: item.cost,
                 date: item.date
             }
             
             try {
-                const resp = await requestProcessing(`http://localhost:8000/task?_id=${item._id}`, 'PATCH', objData);
+                const resp = await requestProcessingPatch(item._id, objData);
                 if (resp.status === 200) {
-                    const resp_all = await requestProcessing('http://localhost:8000/tasks', 'GET');    
-                    let result = await resp_all.json();
-                    allTasks = result.data;
+
                 } else {
                     throw new Error;
                 }
@@ -286,12 +340,12 @@ function toChange(item, index) {
             blockDivLeft.appendChild(blockTextPlace);
             blockLeftInnerContent.appendChild(blockTextDate);
             blockLeftInnerContent.appendChild(blockTextExpenses);
-            render();
+            // render();
         } else {
             // Если изменил на пустой, то возвращает предыдущие значение
-            blockTextPlace.innerText = item.text_place;
+            blockTextPlace.innerText = item.place;
             blockTextDate.innerText = item.data;
-            blockTextExpenses.innerText = item.text_expenses;
+            blockTextExpenses.innerText = item.cost;
 
             blockDivLeft.removeChild(introduceChangesPlace);
             blockLeftInnerContent.removeChild(introduceChangesDate);
@@ -301,7 +355,7 @@ function toChange(item, index) {
 
             blockLeftInnerContent.appendChild(blockTextDate);
             blockLeftInnerContent.appendChild(blockTextExpenses);
-            render();
+            // render();
         }
     })
 

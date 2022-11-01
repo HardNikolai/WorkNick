@@ -12,17 +12,16 @@ module.exports.getAllTasks = async (req, res, next) => {
 
 module.exports.createNewTask = async (req, res, next) => {
     try {
-        const dayReq = new Date(req.body.date);
-        const checkTypePrice = typeof(req.body.text_expenses) === 'number' && req.body.text_expenses >= 0;
-
-        if (checkTypePrice) {
-            if (dayReq == 'Invalid Date') {
+        const [place, cost, date] = [req.body.place, Number(req.body.cost), new Date(req.body.date)];
+        const checkPrice = typeof(req.body.cost) === 'number' && req.body.cost >= 0;
+        if (checkPrice) {
+            if (date.toString() === 'Invalid Date') {
                 res.status(400).send({message: 'Ошибка ввода формата даты. Формат ввода: "2022-12-31'});
             }
             const task = await Task.create({
-                text_place: req.body.text_place,
-                text_expenses: req.body.text_expenses,
-                date: dayReq
+                place: place,
+                cost: cost,
+                date: date
                 });
         res.status(200).send(task);
         } else {
@@ -36,16 +35,16 @@ module.exports.createNewTask = async (req, res, next) => {
 
 module.exports.changeTaskInfo = async (req, res, next) => {
     try {
-        const dayReq = new Date(req.body.date);
-        const num = Number(req.body.text_expenses);
-        const checkTypePrice = num > 0;
+        const [place, cost, date, id] = [req.body.place, Number(req.body.cost), new Date(req.body.date), req.body._id];
+        const checkPrice = Number(req.body.cost) >= 0;
+        const checkDateFormat = date.toString() === 'Invalid Date' || date >= new Date() || date <= new Date(1970);
 
-        if (checkTypePrice) {
-            if (dayReq == 'Invalid Date') {
-                res.status(400).send({message: 'Ошибка ввода формата даты. Формат ввода: "2022-12-31'});
+        if (checkPrice) {
+            if (checkDateFormat) {
+                res.status(400).send({message: 'Ошибка ввода даты. Формат ввода: "2022-12-31'});
             }
-            await Task.findByIdAndUpdate(req.query._id, {text_place: req.body.text_place, text_expenses: num, date: dayReq});
-            const newTask = await Task.findById(req.query._id);
+            await Task.findByIdAndUpdate(id, {place: place, cost: cost, date: date});
+            const newTask = await Task.findById(id);
             res.status(200).send(newTask);
         } else {
             res.status(400).send({message: 'Ошибка ввода данных "text_expenses", только числовой формат и больше нуля'})
@@ -58,13 +57,10 @@ module.exports.changeTaskInfo = async (req, res, next) => {
 
 module.exports.deleteTask = async (req, res, next) => {
     try {
-        const task = await Task.findById(req.query._id);
-        const delete_task = await Task.deleteOne({_id: req.query._id});
-        if (delete_task.deletedCount === 1) {
-            res.status(200).send(task);
-        } else {
-            throw new Error;
-        }
+        const id = req.query._id;
+        const task = await Task.findById(id);
+        await Task.deleteOne({_id: id});
+        res.status(200).send(task);
     } catch (error) {
         next(error);
         res.status(500).send({message: error.message});
