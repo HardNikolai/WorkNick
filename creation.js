@@ -29,7 +29,7 @@ async function requestProcessingGet(db) {
             throw new Error;
         } 
     } catch (error) {
-        bilderBlockError(mess);
+        bilderBlockMessage(mess);
     }
 }
 
@@ -51,7 +51,7 @@ async function requestProcessingPost(newTask) {
             throw new Error;
         } 
     } catch (error) {
-        bilderBlockError(mess);
+        bilderBlockMessage(mess);
     }
 }
 
@@ -74,7 +74,7 @@ async function requestProcessingPatch(id, newTask) {
             throw new Error;
         } 
     } catch (error) {
-        bilderBlockError(mess);
+        bilderBlockMessage(mess);
     }
 }
 
@@ -94,7 +94,7 @@ async function requestProcessingDelete(id) {
             throw new Error;
         } 
     } catch (error) {
-        bilderBlockError(mess);
+        bilderBlockMessage(mess);
     }
 }
 
@@ -114,16 +114,16 @@ function clearValue() {
     input_expenses.value = '';
 }
 
-function bilderBlockError(message) {
-    const blockError = document.getElementById("errorIdBlock");
-    blockError.className = 'error-block-on';
+function bilderBlockMessage(message) {
+    const blockError = document.getElementById("messageIdBlock");
+    blockError.className = 'message-block-on';
 
-    const textError = document.getElementById("error-message-id");
+    const textError = document.getElementById("message-id");
     textError.innerText = message;
 
     setTimeout(() => {
-        blockError.className = "error-block";
-    }, 2500);
+        blockError.className = "message-block";
+    }, 1000);
 }
 
 async function addNewTask() {
@@ -146,15 +146,16 @@ async function addNewTask() {
         try {
             const resp = await requestProcessingPost(objData);
             if (resp.status === 200) {
+                bilderBlockMessage('Задача успешно добавлена')
                 render();
             } else {
                 throw new Error;
             }
         } catch (error) {
-            bilderBlockError('Ошибка добавления задачи');
+            bilderBlockMessage('Ошибка добавления задачи');
         }
     } else {
-        bilderBlockError('Неверный формат данных');
+        bilderBlockMessage('Неверный формат данных');
     }
     clearValue();
 }
@@ -201,12 +202,13 @@ async function sendData(block, innerBlock, textPlace, textDate, textCost, index,
         try {
             const resp = await requestProcessingPatch(task._id, objData);
             if (resp.status === 200) {
+                bilderBlockMessage('Успешно изменено')
                 render();
             } else {
                 throw new Error;
             }
         } catch (error) {
-            bilderBlockError('Ошибка изменения задачи');
+            bilderBlockMessage('Ошибка изменения задачи');
         }
     } else {
         // Если изменил на пустой, то возвращает предыдущие значение
@@ -247,7 +249,7 @@ async function toChange(item, index) {
     introduceChangesPlace.className = 'change-in-textPlace';
     introduceChangesPlace.id = `input-textPlace-id=${index}`;
     introduceChangesPlace.value = `${item.place}`;
-    introduceChangesPlace.rows = `${Math.ceil(introduceChangesPlace.value.length / 20)}`;
+    introduceChangesPlace.rows = `${Math.ceil(introduceChangesPlace.value.length / 25)}`;
     introduceChangesPlace.addEventListener('input', function () {
         introduceChangesPlace.style.height = 0;
         introduceChangesPlace.style.height = `${introduceChangesPlace.scrollHeight}px`;
@@ -292,12 +294,13 @@ async function toDelete(id) {
     try {
         const resp = await requestProcessingDelete(id);
         if (resp.status === 200) {
+            bilderBlockMessage('Успешно удалено')
             render();
         } else {
             throw new Error;
         }
     } catch (error) {
-        bilderBlockError('Ошибка удаления');
+        bilderBlockMessage('Ошибка удаления');
     }
 }
 
@@ -323,6 +326,8 @@ window.onload = async function init() {
 
 
 render = async () => {
+    const spinner = document.getElementById('spinner-id');
+    spinner.style.display = 'none';
     allTasks = await requestProcessingGet(allTasks);
     const content = document.getElementById('container-with-content');
     const getBlockSum = document.getElementById('total');

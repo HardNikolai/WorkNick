@@ -26,13 +26,19 @@
                         <input id="data-expenses" class="text-expenses" type="number">
                     </div>
                     <div class="block-button">
-                        <img src="image/mopsButton.png" alt="Картинка не найдена" class="mops-button" onclick="addNewTask()" id="buttonMops">
+                        <button class="add-button" onclick="addNewTask()">
+                            <img src="image/mopsButton.png" alt="Картинка не найдена" class="mops-button" id="buttonMops">
+                            <p class="add-button-label">Добавить</p>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="error-block" id="errorIdBlock">
-                <p id="error-message-id"></p>
+            <div class="message-block" id="messageIdBlock">
+                <p id="message-id"></p>
                 <img src="image/error-mops.png" alt="Картинка не найдена" class="mops-error">
+            </div>
+            <div class="spinner" id="spinner-id">
+                <img src="image/runningPug.gif" alt="Картинка не найдена">
             </div>
             <div class="block-container">
                 <div class="container-total">
