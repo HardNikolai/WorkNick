@@ -10,7 +10,6 @@ const urlOtherRout = 'http://localhost:8000/task';
 //requests processing
 
 async function requestProcessingGet(db) {
-    document.querySelector('.spinner').style.display = 'flex';
     try {
         let mess;
         const resp = await fetch(urlGet, {
@@ -31,7 +30,6 @@ async function requestProcessingGet(db) {
 }
 
 async function requestProcessingPost(newValue) {
-    document.querySelector('.spinner').style.display = 'flex';
     try {
         let mess;
         const resp = await fetch(urlOtherRout, {
@@ -54,7 +52,6 @@ async function requestProcessingPost(newValue) {
 }
 
 async function requestProcessingPatch(newText, newCheck, id) {
-    document.querySelector('.spinner').style.display = 'flex';
     try {
         let mess;
         const resp = await fetch(urlOtherRout, {
@@ -78,7 +75,6 @@ async function requestProcessingPatch(newText, newCheck, id) {
 }
 
 async function requestProcessingDelete(id) {
-    document.querySelector('.spinner').style.display = 'flex';
     try {
         let mess;
         const resp = await fetch(urlOtherRout, {
@@ -247,6 +243,7 @@ window.onload = async function init() {
     blockInput.addEventListener('change', updateValue);
     blockInput.focus();
     allTasks = await requestProcessingGet(allTasks);
+    document.querySelector('.spinner').style.display = 'none';
     render();
 }
 
@@ -315,5 +312,4 @@ render = async () => {
 
         content.appendChild(container);
     })
-    document.querySelector('.spinner').style.display = 'none';
 }
