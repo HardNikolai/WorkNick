@@ -36,7 +36,12 @@ module.exports.createNewTask = async (req, res, next) => {
 module.exports.changeTaskInfo = async (req, res, next) => {
     try {
         const [place, cost, date, id] = [req.body.place, Number(req.body.cost), new Date(req.body.date), req.body._id];
-        const checkDateFormat = date.toString() === 'Invalid Date' || date >= new Date() || date <= new Date(1970);
+        let weekLater = new Date(date);
+        weekLater.setDate(weekLater.getDate() + 7);
+    
+        let weekAgo = new Date(date);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        const checkDateFormat = date.toString() === 'Invalid Date' || date >= weekLater || date <= weekAgo;
         if (cost >= 0) {
             if (checkDateFormat) {
                 res.status(400).send({message: 'Ошибка ввода даты. Формат ввода: "2022-12-31'});

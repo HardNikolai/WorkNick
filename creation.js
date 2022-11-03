@@ -164,7 +164,14 @@ async function sendData(block, innerBlock, textPlace, textDate, textCost, index,
     let bulTextDate;
     const newTextPlaceValue = textPlace.value.trim();
     const newTextDateValue = textDate.valueAsDate;
-    const checkDate = new Date(newTextDateValue) <= new Date() && new Date(newTextDateValue) >= new Date(1970);
+
+    let weekLater = new Date(task.date);
+    weekLater.setDate(weekLater.getDate() + 7);
+
+    let weekAgo = new Date(task.date);
+    weekAgo.setDate(weekAgo.getDate() - 7);
+
+    const checkDate = newTextDateValue <= weekLater && newTextDateValue >= weekAgo;
 
     const newTextExpensesValue = textCost.value.trim();
     const blockTextPlace = document.createElement('p');
