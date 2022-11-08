@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const apiRoutes = require('./src/modules/routes/routes');
+// 'mongodb+srv://nkharkevichitrum:qwedsaq12Q@cluster0.y6syylw.mongodb.net/accounting_records'
 
 const app = express();
 app.use(express.json());

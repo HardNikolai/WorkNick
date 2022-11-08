@@ -167,7 +167,6 @@ async function sendData(block, innerBlock, textPlace, textDate, textCost, index,
 
     let weekLater = new Date(task.date);
     weekLater.setDate(weekLater.getDate() + 7);
-
     let weekAgo = new Date(task.date);
     weekAgo.setDate(weekAgo.getDate() - 7);
 
