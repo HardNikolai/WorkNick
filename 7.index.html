@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout</title>
+    <link rel="stylesheet" href="7.style.css">
+    <script src="creation.js"></script>
+</head>
+<body>
+    <div class="main__block">
+        <div class="block__accounting">
+            <div class="block-header">
+                <p class="text-in-the-title">Учет моих расходов</p>
+            </div>
+            <div class="container-data-entry">
+                <div class="container-entry">
+                    <div class="first__block__container-data">
+                        <p class="title-place">Куда было потрачено:</p>
+                        <input id="data-place" class="text-place" type="string">
+                    </div>
+                    <div class="second__block__container-data">
+                        <p class="name_of_expenses">Сколько было потрачено:</p>
+                        <input id="data-expenses" class="text-expenses" type="number">
+                    </div>
+                    <div class="block-button">
+                        <button class="add-button" onclick="addNewTask()">
+                            <img src="image/mopsButton.png" alt="Картинка не найдена" class="mops-button" id="buttonMops">
+                            <p class="add-button-label">Добавить</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="message-block" id="messageIdBlock">
+                <p id="message-id"></p>
+                <img src="image/error-mops.png" alt="Картинка не найдена" class="mops-error">
+            </div>
+            <div class="spinner" id="spinner-id">
+                <img src="image/runningPug.gif" alt="Картинка не найдена">
+            </div>
+            <div class="block-container">
+                <div class="container-total">
+                    <p class="text-total" id="total"></p>
+                </div>
+                <ul class="container" id="container-with-content">
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
