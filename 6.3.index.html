@@ -14,25 +14,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="creation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 </head>
 <body>
-    <div class="block-header">
-        <p class="text-in-the-title">To-do lists</p>
+    <button id="load-db" class="active">Загрузить данные</button>
+    <div>
+        <input id="sortBy">
+        <input id="searchText">
+        <button id="findTask" class="active">Найти данные</button>
+        <button id="saveResult" class="active">Сохранить результат</button>
+        <input type="checkbox" checked="checked" id="sortDir">
     </div>
-    <div class="container-data-entry">
-        <input id="data-entry" class="entry-text">
-        <button class="add-a-list" onclick="addNewTask()">Do</button>
+    <div class="result" id="result">
+
     </div>
-    <div class="loader">
-        <div class="spinner" id="load"></div>
-    </div>
-    <div class="block-error-off" id="main-error">
-        <p id="message-error"></p>
-    </div>
-    <div class="block-container">
-        <ul class="container" id="container-with-content">
-        </ul>
-    </div>
+    <div class="lds-dual-ring" id="spinner"></div>
 </body>
 
 </html>
