@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import './Notification.scss';
+import { IPropsNotification } from "./App";
 
-const Notification = ({ flagNotification, setFlagNotification, textError, setTextError }) => {
-    let textNotofication = '';
+const Notification = ({ flagNotification, setFlagNotification, textError, setTextError }: IPropsNotification) => {
+    let textNotofication:string = '';
 
     if (textError) {
         textNotofication = textError;
@@ -16,7 +17,7 @@ const Notification = ({ flagNotification, setFlagNotification, textError, setTex
                 setFlagNotification(false);
                 setTextError('');
             }, 2000);
-        }
+        };
     });
 
     return (

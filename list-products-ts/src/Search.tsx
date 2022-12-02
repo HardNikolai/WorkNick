@@ -1,14 +1,17 @@
 import React, { useContext, useState } from "react";
 import CountAmountContext from "./CountAmountContext";
 import './Search.scss';
+import { IPropsSearch } from "./App";
 
-const Search = ({onFlagNotification, flag, setFlag}) => {
+const Search = ({onFlagNotification, flag, setFlag}:IPropsSearch) => {
     const state = useContext(CountAmountContext);
     const [textInput, setTextInput] = useState('');
     const setTextSearch = state.setTextSearch;
 
-    const onChangeInput = (e) => {
-        setTextInput(e.target.value);
+    const onChangeInput = (e:React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target) {
+            setTextInput(e.target.value);    
+        };
     };
 
     const Move = () => {
@@ -38,4 +41,3 @@ const Search = ({onFlagNotification, flag, setFlag}) => {
 };
 
 export default Search;
-

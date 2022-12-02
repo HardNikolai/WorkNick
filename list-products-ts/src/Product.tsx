@@ -1,57 +1,57 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import CountAmountContext from "./CountAmountContext";
 import './Product.scss';
+import ProductContext from "./PropuctContext";
+import { IAllAmount } from "./App";
 
-const Product = ({product}) => {
+const Product = () => {
+    const product = useContext(ProductContext);
     const state = useContext(CountAmountContext);
     const allAmount = state.allAmount;
     const setAllAmount = state.setAllAmount;
     const textSrcImage = product.images[0];
     const textNameProduct = product.category.name;
     const textPrice = `Price: ${product.price}$`;
-    const [textNameClass, setTextNameClass] = useState('block-textName-product');
 
-    let all = product.total - product.count;
-    let textTotal = `Total: ${all}`;
+    let all:number = product.total - product.count;
+    let textTotal:string = `Total: ${all}`;
 
     const addOneCount = () => {
-        let checkNum = 0;
+        let checkNum:number = 0;
         if (allAmount.length === 0) {
-            const count = 1;
-            const newListAmaount = [];
-            const newProduct = {
+            const count:number = 1;
+            const newListAmaount:Array<IAllAmount> = [];
+            const newProduct:IAllAmount = {
                 id: product.id,
                 name: textNameProduct,
                 price: product.price,
                 count: count,
                 total: count*product.price
             };
-            const countCard = 1;
+            const countCard:number = 1;
             product.count = countCard;
             newListAmaount.push(newProduct);
             setAllAmount(newListAmaount);
-            setTextNameClass('block-textName-product green');
         } else {
-            const newListAmaount = [];
+            const newListAmaount:Array<IAllAmount> = [];
             for (let i = 0; i < allAmount.length; i++) {
                 if (allAmount[i].id === product.id) {
-                    const changeProduct = allAmount[i];
-                    const count = changeProduct.count + 1;
-                    const newTotal = count*changeProduct.price;
+                    const changeProduct:IAllAmount = allAmount[i];
+                    const count:number = changeProduct.count + 1;
+                    const newTotal:number = count*changeProduct.price;
                     product.count = count;
 
                     changeProduct.count = count;
                     changeProduct.total = newTotal;
                     newListAmaount.push(changeProduct);
                     setAllAmount(newListAmaount);
-                    setTextNameClass('block-textName-product green');
                 } else {
                     checkNum += 1;
                     newListAmaount.push(allAmount[i]);
                     if (checkNum === allAmount.length) {
-                        const count = 1;
+                        const count:number = 1;
                         product.count = count;
-                        const newProduct = {
+                        const newProduct:IAllAmount = {
                             id: product.id,
                             name: textNameProduct,
                             price: product.price,
@@ -60,7 +60,6 @@ const Product = ({product}) => {
                         };
                         newListAmaount.push(newProduct);
                         setAllAmount(newListAmaount);
-                        setTextNameClass('block-textName-product green');
                     };
                 };
             };
@@ -68,18 +67,15 @@ const Product = ({product}) => {
     };
 
     const deleteOneCount = () => {
-        const newListAmaount = [];
+        const newListAmaount:Array<IAllAmount> = [];
         for (let i = 0; i < allAmount.length; i++) {
             if (allAmount[i].id === product.id) {
-                const count = allAmount[i].count - 1;
+                const count:number = allAmount[i].count - 1;
                 product.count = count;
-                const total = count * allAmount[i].price;
+                const total:number = count * allAmount[i].price;
                 allAmount[i].count = count;
                 allAmount[i].total = total;
                 newListAmaount.push(allAmount[i]);
-                if (count === 0) {
-                    setTextNameClass('block-textName-product');
-                };
             } else {
                 newListAmaount.push(allAmount[i]);
             }
@@ -89,43 +85,41 @@ const Product = ({product}) => {
 
     const clickBlock = () => {
         if (product.count === 0) {
-            let checkNum = 0;
+            let checkNum:number = 0;
             if (allAmount.length === 0) {
-                const count = 1;
-                const newListAmaount = [];
-                const newProduct = {
+                const count:number = 1;
+                const newListAmaount:Array<IAllAmount> = [];
+                const newProduct:IAllAmount = {
                     id: product.id,
                     name: textNameProduct,
                     price: product.price,
                     count: count,
                     total: count*product.price
                 };
-                const countCard = 1;
+                const countCard:number = 1;
                 product.count = countCard;
                 newListAmaount.push(newProduct);
                 setAllAmount(newListAmaount);
-                setTextNameClass('block-textName-product green');
             } else {
-                const newListAmaount = [];
+                const newListAmaount:Array<IAllAmount> = [];
                 for (let i = 0; i < allAmount.length; i++) {
                     if (allAmount[i].id === product.id) {
-                        const changeProduct = allAmount[i];
-                        const count = changeProduct.count + 1;
-                        const newTotal = count*changeProduct.price;
+                        const changeProduct:IAllAmount = allAmount[i];
+                        const count:number = changeProduct.count + 1;
+                        const newTotal:number = count*changeProduct.price;
                         product.count = count;
 
                         changeProduct.count = count;
                         changeProduct.total = newTotal;
                         newListAmaount.push(changeProduct);
                         setAllAmount(newListAmaount);
-                        setTextNameClass('block-textName-product green');
                     } else {
                         checkNum += 1;
                         newListAmaount.push(allAmount[i]);
                         if (checkNum === allAmount.length) {
-                            const count = 1;
+                            const count:number = 1;
                             product.count = count;
-                            const newProduct = {
+                            const newProduct:IAllAmount = {
                                 id: product.id,
                                 name: textNameProduct,
                                 price: product.price,
@@ -134,24 +128,20 @@ const Product = ({product}) => {
                             };
                             newListAmaount.push(newProduct);
                             setAllAmount(newListAmaount);
-                            setTextNameClass('block-textName-product green');
                         };
                     };
                 };
             };
         } else if (product.count === 1) {
-            const newListAmaount = [];
+            const newListAmaount:Array<IAllAmount> = [];
             for (let i = 0; i < allAmount.length; i++) {
                 if (allAmount[i].id === product.id) {
-                    const count = allAmount[i].count - 1;
+                    const count:number = allAmount[i].count - 1;
                     product.count = count;
-                    const total = count * allAmount[i].price;
+                    const total:number = count * allAmount[i].price;
                     allAmount[i].count = count;
                     allAmount[i].total = total;
                     newListAmaount.push(allAmount[i]);
-                    if (count === 0) {
-                        setTextNameClass('block-textName-product');
-                    };
                 } else {
                     newListAmaount.push(allAmount[i]);
                 }

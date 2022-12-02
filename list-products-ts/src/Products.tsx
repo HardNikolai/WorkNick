@@ -1,12 +1,15 @@
 import React, { useContext, useMemo } from "react";
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useEffect } from 'react';
 import Product from "./Product";
 import './Products.scss';
 import TextErrorContext from "./TextErrorContext";
 import CountAmountContext from "./CountAmountContext";
+import { IPropsProducts } from "./App";
+import { IListProduct } from "./App";
+import ProductContext from "./PropuctContext";
 
-const Products = ({ onFlagNotification }) => {
+const Products = ({ onFlagNotification }:IPropsProducts) => {
     const setTextError = useContext(TextErrorContext);
     const state = useContext(CountAmountContext);
     const listProducts = state.listProducts;
@@ -15,8 +18,8 @@ const Products = ({ onFlagNotification }) => {
 
     const getProducts = async () => {
         try {
-            let list = [];
-            const resp = await axios.get('https://api.escuelajs.co/api/v1/products');
+            let list:IListProduct[] = [];
+            const resp:AxiosResponse = await axios.get('https://api.escuelajs.co/api/v1/products');
             if (resp.status === 200) {
                 for (let i = 0; i < 20; i++) {
                     list.push(resp.data[i]);
@@ -29,11 +32,11 @@ const Products = ({ onFlagNotification }) => {
             }
         } catch (error) {
             setTextError('Data loading error');
-            onFlagNotification();
+            onFlagNotification(true);
         }
     };
 
-    const newList = useMemo(() => {
+    const newList:IListProduct[] = useMemo(() => {
         return listProducts.filter(item => item.category.name.includes(textSearch));
     }, [listProducts, textSearch]);
 
@@ -44,9 +47,11 @@ const Products = ({ onFlagNotification }) => {
     return (
         <div className="block-main-products">
             {
-                newList.map((product, index) =>
+                newList.map((product:IListProduct, index:number) =>
                     <div key={`index=${index}`}>
-                        <Product product={product}/>
+                        <ProductContext.Provider value={product}>
+                            <Product />
+                        </ProductContext.Provider>
                     </div>
                 )
             }
