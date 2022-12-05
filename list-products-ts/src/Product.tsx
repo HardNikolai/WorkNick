@@ -132,7 +132,7 @@ const Product = () => {
             };
         } else if (product.count === 1) {
             const newListAmaount:Array<IAllAmount> = [];
-            allAmount.map((item:IAllAmount)=> {
+            allAmount.map((item:IAllAmount) => {
                 if (item.id === product.id) {
                     const count:number = item.count - 1;
                     product.count = count;
@@ -140,8 +140,11 @@ const Product = () => {
                     item.count = count;
                     item.total = total;
                     newListAmaount.push(item);
+                } else {
+                    newListAmaount.push(item)
                 };
             });
+            console.log(newListAmaount);
             setAllAmount(newListAmaount);
         };
     };
