@@ -30,7 +30,7 @@ const Search = ({onFlagNotification, flag, setFlag}:IPropsSearch) => {
             </div>
             <div className="block-inner-main-search">
                 <div className='block-form-search'>
-                    <input name='product' onChange={(e) => onChangeInput(e)} className="block-input" placeholder="What kind of product?"/>
+                    <input name='product' onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeInput(e)} className="block-input" placeholder="What kind of product?"/>
                     <button className="block-button" onClick={() => Move()}>
                         <img src="LUPA.png" alt="Not found" className="image-lupa"/>
                     </button>

@@ -48,7 +48,7 @@ export interface IPropsSearch {
 };
 
 export interface IPropsNotification {
-    flagNotification: boolean
+    isFlagNotification: boolean
     setFlagNotification: React.Dispatch<React.SetStateAction<boolean>>
     textError: string
     setTextError: React.Dispatch<React.SetStateAction<string>>
@@ -60,7 +60,7 @@ export interface IPropsProducts {
 
 function App() {
     const [allAmount, setAllAmount] = useState<Array<IAllAmount>>([]);
-    const [flagNotification, setFlagNotification] = useState<boolean>(false);
+    const [isFlagNotification, setFlagNotification] = useState<boolean>(false);
     const [textError, setTextError] = useState<string>('');
     const [listProducts, setListProducts] = useState<Array<IListProduct>>([]);
     const [textSearch, setTextSearch] = useState<string>('');
@@ -76,13 +76,13 @@ function App() {
     };
 
     const propsNotification: IPropsNotification = {
-        flagNotification,
+        isFlagNotification,
         setFlagNotification,
         textError,
         setTextError
     };
 
-    const onFlagNotification = async ():Promise<void> => {
+    const onFlagNotification = ():void => {
         setFlagNotification(true);
     };
 

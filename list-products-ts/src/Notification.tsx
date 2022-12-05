@@ -1,38 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import './Notification.scss';
 import { IPropsNotification } from "./App";
 
-const Notification = ({ flagNotification, setFlagNotification, textError, setTextError }: IPropsNotification) => {
-    let textNotofication:string = '';
+const Notification = ({ isFlagNotification, setFlagNotification, textError, setTextError }: IPropsNotification) => {
+    let textNotification:string = textError|| 'eeeeemmmm';
 
     if (textError) {
-        textNotofication = textError;
+        textNotification = textError;
     } else {
-        textNotofication = 'eeeeemmmm';
+        textNotification = 'eeeeemmmm';
     };
 
-    useEffect(() => {
-        if (flagNotification) {
-            setTimeout(() => {
-                setFlagNotification(false);
-                setTextError('');
-            }, 2000);
+    const setConfig = () => {
+        setFlagNotification(false);
+        setTextError('');
+    };
+
+    useMemo(() => {
+        if (isFlagNotification) {
+            setTimeout(setConfig, 2000);
         };
-    });
+    }, [isFlagNotification]);
 
     return (
         <>
             {   
-                flagNotification 
+                isFlagNotification 
                 ? 
                 <div className="block-notification-main">
                     <div>
-                        <p className="block-text-notification">
-                            {textNotofication}
+                        <p className="notofication-text">
+                            {textNotification}
                         </p>
                     </div>
                     <div>
-                        <img src="ETO_PONCHIK.gif" className="block-image-notification" alt="Not found"/>
+                        <img src="ETO_PONCHIK.gif" className="notification-image" alt="Not found"/>
                     </div>
                 </div>
                 :<div></div>

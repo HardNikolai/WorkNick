@@ -5,23 +5,24 @@ import Product from "./Product";
 import './Products.scss';
 import TextErrorContext from "./TextErrorContext";
 import CountAmountContext from "./CountAmountContext";
-import { IPropsProducts } from "./App";
+import { IPropsCountContext, IPropsProducts } from "./App";
 import { IListProduct } from "./App";
 import ProductContext from "./PropuctContext";
 
 const Products = ({ onFlagNotification }:IPropsProducts) => {
     const setTextError = useContext(TextErrorContext);
-    const state = useContext(CountAmountContext);
+    const state:IPropsCountContext = useContext(CountAmountContext);
     const listProducts = state.listProducts;
     const setListProducts = state.setListProducts;
     const textSearch = state.textSearch;
+    const totalQuantityFromRequest = 20;
 
     const getProducts = async () => {
         try {
             let list:IListProduct[] = [];
             const resp:AxiosResponse = await axios.get('https://api.escuelajs.co/api/v1/products');
             if (resp.status === 200) {
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < totalQuantityFromRequest; i++) {
                     list.push(resp.data[i]);
                     list[i].total = Math.round(Math.random()*100);
                     list[i].count = 0;
@@ -48,7 +49,7 @@ const Products = ({ onFlagNotification }:IPropsProducts) => {
         <div className="block-main-products">
             {
                 newList.map((product:IListProduct, index:number) =>
-                    <div key={`index=${index}`}>
+                    <div key={`index=${product.id}`}>
                         <ProductContext.Provider value={product}>
                             <Product />
                         </ProductContext.Provider>
