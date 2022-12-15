@@ -1,11 +1,10 @@
 const Task = require('../../db/models/task/index');
 
-module.exports.getAllTasks = async (req, res, next) => {
+module.exports.getAllTasks = async (req, res) => {
     try {
         const tasks = await Task.find();
         res.send({data: tasks});
     } catch (error) {
-        next(error);
         res.status(500).send({message: error.message});
     }
 };

@@ -100,6 +100,7 @@ async function requestProcessingDelete(id) {
 
 // other
 function updateValueFirst(event) {
+    console.log(event)
     valueInputPlace = event.target.value;
 }
 
