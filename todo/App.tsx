@@ -61,7 +61,7 @@ const App = observer(() => {
         let dateMinutes:string|number = new Date().getMinutes();
 
         if (dateDay < 10) {
-            dateDay = `0${dateMinutes}`;
+            dateDay = `0${dateDay}`;
         };
 
         if (dateMonth < 10) {
