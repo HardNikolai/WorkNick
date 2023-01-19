@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "859937948700",
+    "project_id": "appfinnative",
+    "storage_bucket": "appfinnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859937948700:android:b11e008dc913610e9f4bd9",
+        "android_client_info": {
+          "package_name": "com.appfinnat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859937948700-dggpa224fijlb9r00t1f0tloc9l3nu9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appfinnat",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "859937948700-ugqpdosi4fi1h4lc4a98abl24o3am0ok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkANrirdSYmIVpcBc3GE5Gcsd5brA92QU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859937948700-ugqpdosi4fi1h4lc4a98abl24o3am0ok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
