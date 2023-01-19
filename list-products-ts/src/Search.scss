@@ -1,0 +1,80 @@
+.block-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.341);
+    width: 600px;
+    height: 160px;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.block-inner-main-search {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 0px;
+}
+
+.block-form-search {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    padding-right: 50px;
+}
+
+.block-input {
+    padding-left: 10px;
+    width: 300px;
+    height: 30px;
+    border-radius: 10px;
+    border: 4px solid white;
+    background-color: bisque;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.block-input:focus {
+    outline: none;
+}
+
+.block-loader {
+    display: flex;
+    justify-content: center;
+}
+
+.block-mail {
+    padding-left: 40px;
+    align-self: flex-end;
+    align-items: center;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+    margin: 0 auto 0 auto;
+    transform-origin: bottom;
+    animation-name: block-mail;
+    animation-timing-function: linear;
+    width: 50px;
+    margin: 0px;
+}
+
+.block-mail-off {
+    width: 110px;
+}
+
+.block-button {
+    background: none;
+    padding: 10px;
+    height: 60px;
+    width: 60px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.block-button:hover {
+    cursor: pointer;
+}
+
+.image-lupa {
+    margin-top: -10px;
+    margin-left: -10px;
+    width: 60px;
+}

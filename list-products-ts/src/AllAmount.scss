@@ -1,0 +1,19 @@
+.block-main-allAmount {
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+    width: 800px;
+    border-radius: 10px;
+}
+
+.allAmount-text {
+    width: 800px;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 30px;
+    display: flex;
+    height: 100%;
+    border-radius: 10px;
+    background-color: white;
+    font-family: 'Ubuntu', sans-serif;
+}

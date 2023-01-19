@@ -1,0 +1,66 @@
+.block-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 380px;
+    width: 300px;
+    background-color: white;
+}
+
+.block-product:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 20px 8px black;
+}
+
+.block-textName-product {
+    background-color: yellow;
+    width: 280px;
+    padding: 10px;
+    font-size: 20px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.green {
+    background-color: rgb(84, 190, 84);
+}
+
+.image-product {
+    width: 300px;
+    object-fit: cover;
+}
+
+.block-content {
+    padding-top: 10px;
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+}
+
+.block-textPrice-product {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.block-textTotal-product {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.block-changeAmount-product {
+    padding-top: 15px;
+    display: flex;
+    width: 300px;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.block-change-total {
+    width: 30px;
+}
+
+.block-textTotal {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.off-block {
+    width: 30px;
+}
