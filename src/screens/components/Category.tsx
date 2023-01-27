@@ -1,35 +1,46 @@
 import {View, Text, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
-import { setStateDeleteCategory, setStateErrorServer } from '../../redux/stateConfig';
+import {URL_CATEGORY_DELETE} from '/constants/index';
+import {
+  setStateDeleteCategory,
+  setStateError,
+  setStateErrorInput,
+} from '/redux/stateConfig';
 import {RootState} from '../../redux/store';
-import { IPropsCategory } from '../interfaces/interfaces';
-import {requestCategoryDelete} from '/api/requestDataCategory';
+import {IPropsCategory} from '../interfaces/interfaces';
+import {makeApiCategory} from '/api/requestDataCategory';
 import svg from '/assets/index_svg';
 
-const Category = ({item }: IPropsCategory) => {
+const Category = ({item}: IPropsCategory) => {
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.user.dataUser.token);
-  const stateDeleteCategory = useSelector((state: RootState) => state.state.stateDeleteCategory);
+  const stateDeleteCategory = useSelector(
+    (state: RootState) => state.state.stateDeleteCategory,
+  );
+  const {Trash} = svg;
 
   const tosterErrorServer = () => {
-    dispatch(setStateErrorServer(true));
+    dispatch(setStateError(true));
+    dispatch(setStateErrorInput(false));
     setTimeout(() => {
-      dispatch(setStateErrorServer(false));
+      dispatch(setStateError(true));
     }, 2000);
   };
 
   const deleteCategory = async () => {
     try {
-      const res = await requestCategoryDelete(token, String(item.id + 1));
-      if (res) {
-        if (res.status === 200) {
-          dispatch(setStateDeleteCategory(!stateDeleteCategory));
-          return res;
-        } else {
-          dispatch(setStateDeleteCategory(!stateDeleteCategory));
-          tosterErrorServer();
-        }
+      const url =
+        URL_CATEGORY_DELETE +
+        `${String(item.id + 1)}` +
+        ':B' +
+        `${String(item.id + 1)}` +
+        ':clear?access_token=' +
+        `${token}`;
+      const res = await makeApiCategory('DELETE', url);
+      if (res && res.status === 200) {
+        dispatch(setStateDeleteCategory(!stateDeleteCategory));
+        return res;
       } else {
         dispatch(setStateDeleteCategory(!stateDeleteCategory));
         tosterErrorServer();
@@ -45,10 +56,9 @@ const Category = ({item }: IPropsCategory) => {
         <View style={styles.blockMainCategory}>
           <Text style={styles.textCategory}>{item.name}</Text>
           <View style={styles.blockImageTrash}>
-            <TouchableOpacity
-              onPress={deleteCategory}>
+            <TouchableOpacity onPress={deleteCategory}>
               <View style={styles.blockMainImageTrash}>
-                <svg.Trash style={styles.imageTrash} />
+                <Trash style={styles.imageTrash} />
               </View>
             </TouchableOpacity>
           </View>

@@ -1,9 +1,10 @@
 import {View, Text, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+import {RootState} from '/redux/store';
 import svg from '/assets/index_svg';
 
 const TotalBalance = () => {
+  const {GreenStatus, RedStatus} = svg;
   const total = useSelector((state: RootState) => state.balance.dataBalance.total);
 
   return (
@@ -11,18 +12,14 @@ const TotalBalance = () => {
       <View style={styles.container}>
         <View style={styles.mainContainer}>
           {total >= 0 ? (
-            <svg.GreenStatus width={9} height={9} />
+            <GreenStatus width={9} height={9} />
           ) : (
-            <svg.RedStatus width={9} height={9} />
+            <RedStatus width={9} height={9} />
           )}
           <Text style={styles.textLabelBalance}>Текущий баланс</Text>
         </View>
         <View>
-          {total >= 0 ? (
-            <Text style={styles.textBalanceWhite}>{total.toFixed(2)} Р</Text>
-          ) : (
-            <Text style={styles.textBalanceRed}>{total.toFixed(2)} Р</Text>
-          )}
+            <Text style={[total >= 0 ? styles.textBalanceWhite : styles.textBalanceRed]}>{total.toFixed(2)} Р</Text>
         </View>
       </View>
     </View>

@@ -9,6 +9,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from 'src/navigation/RootStackParamList';
 
 const ProfileInnerScreen = () => {
+  const {ArrowLeft} = svg;
   const navigation =
   useNavigation<
     NavigationProp<RootStackParamList, keyof RootStackParamList>
@@ -33,7 +34,7 @@ const ProfileInnerScreen = () => {
           <TouchableOpacity
             onPress={() => navigation.navigate('ProfileScreen')}>
             <View style={styles.blockButtonBack}>
-              <svg.ArrowLeft />
+              <ArrowLeft />
               <Text style={styles.textButtonBack}>Назад</Text>
             </View>
           </TouchableOpacity>

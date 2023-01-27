@@ -2,10 +2,11 @@ import {createSlice} from '@reduxjs/toolkit';
 import { Idate } from '../screens/interfaces/interfaces';
 
 const fullYear = new Date().getFullYear()
+const fullMonth = new Date().getMonth()
 
 const data: Idate = {
     year: fullYear,
-    month: new Date().getMonth()
+    month: fullMonth
 };
 
 const configSlice = createSlice({

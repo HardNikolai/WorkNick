@@ -1,18 +1,18 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeDateSynch} from '../../redux/sliceData';
+import {changeDateSynch} from '/redux/sliceData';
 import svg from '/assets/index_svg';
 import {RootState} from 'src/redux/store';
 
 const BlockSynchronization = () => {
   const dispatch = useDispatch();
   const date = useSelector((state: RootState) => state.table.dataTable.dateSynch);
-
+  const {Play, Bitmap} = svg;
   return (
     <View style={styles.container}>
       <View style={styles.blockMainContainer}>
         <View style={styles.blockImageLogo}>
-          <svg.Bitmap />
+          <Bitmap />
         </View>
         <View style={styles.blockTextSynchronization}>
           <Text style={styles.textLogoSynchronization}>Синхронизация</Text>
@@ -23,7 +23,7 @@ const BlockSynchronization = () => {
         </View>
         <View>
           <TouchableOpacity onPress={() => dispatch(changeDateSynch(new Date))}>
-            <svg.Play />
+            <Play />
           </TouchableOpacity>
         </View>
       </View>

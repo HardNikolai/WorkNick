@@ -1,27 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
+import { Istate } from '../screens/interfaces/interfaces';
 
-interface state {
-  stateTouchDate: boolean;
-  stateAddNewTask: boolean;
-  stateCategoryImageExpense: boolean;
-  stateCategoryImageAddition: boolean;
-  stateListCategory: boolean;
-  stateErrorInput: boolean;
-  stateChangeTask: boolean;
-  stateAddNewCategory: boolean;
-  stateSaveCategory: boolean;
-  stateDeleteCategory: boolean;
-  stateChangeCalendar: boolean;
-  stateActiveViewTime: boolean;
-  stateNotification: boolean;
-  stateActiveChart: boolean;
-  stateTextLength: boolean;
-  stateActiveViewFilter: boolean;
-  stateErrorServer: boolean;
-  stateTask: boolean
-}
-
-const state: state = {
+const state: Istate = {
   stateTouchDate: false,
   stateAddNewTask: false,
   stateCategoryImageExpense: true,
@@ -38,7 +18,7 @@ const state: state = {
   stateActiveChart: false,
   stateTextLength: false,
   stateActiveViewFilter: false,
-  stateErrorServer: false,
+  stateError: false,
   stateTask: false,
 };
 
@@ -94,12 +74,12 @@ const stateSlice = createSlice({
     setStateActiveViewFilter(state, action) {
       state.stateActiveViewFilter = action.payload;
     },
-    setStateErrorServer(state, action) {
-      state.stateErrorServer = action.payload;
-    },
     setStateTask(state, action) {
       state.stateTask = action.payload;
     },
+    setStateError(state, action) {
+      state.stateError = action.payload;
+    }
   },
 });
 
@@ -117,11 +97,11 @@ export const {
   setStateSaveCategory,
   setStateDeleteCategory,
   setStateErrorInput,
-  setStateErrorServer,
   setStateListCategory,
   setStateNotification,
   setStateTextLength,
-  setStateTask
+  setStateTask,
+  setStateError
 } = stateSlice.actions;
 
 export default stateSlice.reducer;

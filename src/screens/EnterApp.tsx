@@ -2,7 +2,7 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import {useDispatch} from 'react-redux';
-import {setUser} from '../redux/sliceUser';
+import {setUser} from '/redux/sliceUser';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from 'src/navigation/RootStackParamList';
 

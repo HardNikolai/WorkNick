@@ -1,10 +1,11 @@
 import {StyleSheet, Switch, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
-import {toggleIsStateCalculation} from '../../redux/userConfigSlice';
+import {RootState} from '/redux/store';
+import {toggleIsStateCalculation} from '/redux/userConfigSlice';
 import svg from '/assets/index_svg';
 
 const BlockCalculation = () => {
+  const {Group} = svg;
   const dispatch = useDispatch();
   const isCalculation = useSelector((state: RootState) => state.config.config.isStateCalculation);
 
@@ -16,7 +17,7 @@ const BlockCalculation = () => {
     <View style={styles.container}>
       <View style={styles.blockMain}>
         <View style={styles.blockInnerMain}>
-          <svg.Group />
+          <Group />
           <Text style={styles.blockTextInnerMain}>
             Расчитывать остаток на конец месяца
           </Text>

@@ -1,11 +1,12 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {RootStackParamList} from '../../navigation/RootStackParamList';
+import {RootStackParamList} from '/navigation/RootStackParamList';
 import svg from '/assets/index_svg';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { RootState } from '/redux/store';
 
 const BlockProfile = () => {
+  const {ArrowRight} = svg;
   const navigation =
     useNavigation<
       NavigationProp<RootStackParamList, keyof RootStackParamList>
@@ -31,7 +32,7 @@ const BlockProfile = () => {
             </View>
           </View>
           <View style={styles.blockImageArrow}>
-            <svg.ArrowRight />
+            <ArrowRight />
           </View>
         </View>
       </TouchableOpacity>

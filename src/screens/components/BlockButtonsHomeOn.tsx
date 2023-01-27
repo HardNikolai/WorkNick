@@ -1,13 +1,14 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../../navigation/RootStackParamList';
+import {RootStackParamList} from '/navigation/RootStackParamList';
 import svg from '/assets/index_svg';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
-import {setStateAddNewTask} from '../../redux/stateConfig';
-import {clearTask} from '../../redux/sliceTask';
+import {RootState} from '/redux/store';
+import {setStateAddNewTask} from '/redux/stateConfig';
+import {clearTask} from '/redux/sliceTask';
 
 const BlockButtonsHomeOn = () => {
+  const {HomeOn, Off, On, UserOff} = svg;
   const navigation =
     useNavigation<
       NavigationProp<RootStackParamList, keyof RootStackParamList>
@@ -24,20 +25,20 @@ const BlockButtonsHomeOn = () => {
   return (
     <View style={styles.container}>
       <View style={styles.blockButton}>
-        <svg.HomeOn width={19} height={19} />
+        <HomeOn width={19} height={19} />
           <TouchableOpacity
             onPress={() => {
               dispatch(setStateAddNewTask(!stateAddNewTask));
             }}>
             <View style={styles.blockButtonAdd}>
-              {stateAddNewTask ? <svg.Off /> : <svg.On />}
+              {stateAddNewTask ? <Off /> : <On />}
             </View>
           </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             goToProfile();
           }}>
-          <svg.UserOff width={19} height={19} />
+          <UserOff width={19} height={19} />
         </TouchableOpacity>
       </View>
     </View>

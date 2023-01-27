@@ -1,13 +1,13 @@
 import notifee, { RepeatFrequency, TimestampTrigger, TriggerType } from '@notifee/react-native';
 import DatePicker from 'react-native-date-picker';
 import {useDispatch, useSelector} from 'react-redux';
-import { formingDateNotifee, formingTime } from '../../utils/utilNatifee';
-import { setStateActiveViewTime, setStateErrorServer } from '../../redux/stateConfig';
-import {RootState} from '../../redux/store';
+import { formingDateNotifee, formingTime } from '/utils/utilNatifee';
+import { setStateActiveViewTime, setStateError, setStateErrorInput } from '/redux/stateConfig';
+import {RootState} from '/redux/store';
 import {
   changeDateTextNotifee,
   changeDateNotifee,
-} from '../../redux/userConfigSlice';
+} from '/redux/userConfigSlice';
 
 const BlockInstallTime = () => {
   const dispatch = useDispatch();
@@ -27,9 +27,10 @@ const BlockInstallTime = () => {
   }
 
   const tosterErrorServer = () => {
-    dispatch(setStateErrorServer(true));
+    dispatch(setStateError(true));
+    dispatch(setStateErrorInput(false));
     setTimeout(() => {
-      dispatch(setStateErrorServer(false));
+      dispatch(setStateError(false));
     }, 2000);
   };
 

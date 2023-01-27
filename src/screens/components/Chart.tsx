@@ -7,8 +7,8 @@ import {
 } from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
 import {useDispatch, useSelector} from 'react-redux';
-import {setStateActiveChart} from '../../redux/stateConfig';
-import {RootState} from '../../redux/store';
+import {setStateActiveChart} from '/redux/stateConfig';
+import {RootState} from '/redux/store';
 
 const Chart = () => {
   const screenWidth = Dimensions.get('window').width;

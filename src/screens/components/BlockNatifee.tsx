@@ -1,24 +1,40 @@
-import {useMemo} from 'react';
 import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
-import {toggleIsNotification} from '../../redux/userConfigSlice';
+import {RootState} from '/redux/store';
+import {toggleIsNotification} from '/redux/userConfigSlice';
 import svg from '/assets/index_svg';
-import {setStateActiveViewTime, setStateErrorServer} from '../../redux/stateConfig';
-import notifee, { RepeatFrequency, TimestampTrigger, TriggerType } from '@notifee/react-native';
-import { formingDateNotifee, formingTime } from '../../utils/utilNatifee';
+import {
+  setStateActiveViewTime,
+  setStateError,
+  setStateErrorInput,
+} from '/redux/stateConfig';
+import notifee, {
+  RepeatFrequency,
+  TimestampTrigger,
+  TriggerType,
+} from '@notifee/react-native';
+import {formingDateNotifee, formingTime} from '/utils/utilNatifee';
+import { useEffect } from 'react';
 
 const BlockNatifee = () => {
+  const {Tag} = svg;
   const time = formingTime();
   const dispatch = useDispatch();
-  const isNotification = useSelector((state: RootState) => state.config.config.isNotification);
-  const dateTextNotifee = useSelector((state: RootState) => state.config.config.dateTextNotifee);
-  const stateActiveViewTime = useSelector((state: RootState) => state.state.stateActiveViewTime);
+  const isNotification = useSelector(
+    (state: RootState) => state.config.config.isNotification,
+  );
+  const dateTextNotifee = useSelector(
+    (state: RootState) => state.config.config.dateTextNotifee,
+  );
+  const stateActiveViewTime = useSelector(
+    (state: RootState) => state.state.stateActiveViewTime,
+  );
 
   const tosterErrorServer = () => {
-    dispatch(setStateErrorServer(true));
+    dispatch(setStateError(true));
+    dispatch(setStateErrorInput(false));
     setTimeout(() => {
-      dispatch(setStateErrorServer(false));
+      dispatch(setStateError(false));
     }, 2000);
   };
 
@@ -35,7 +51,7 @@ const BlockNatifee = () => {
   }
 
   async function onCreateTriggerNotification(dateStore: string) {
-    const date = formingDateNotifee(dateStore)
+    const date = formingDateNotifee(dateStore);
 
     // Create a time-based trigger
     const trigger: TimestampTrigger = {
@@ -66,7 +82,7 @@ const BlockNatifee = () => {
     }
   }
 
-  useMemo(() => {
+  useEffect(() => {
     if (isNotification) {
       onCreateTriggerNotification(dateTextNotifee);
     } else {
@@ -78,10 +94,10 @@ const BlockNatifee = () => {
     <View style={styles.container}>
       <View style={styles.blockMainContainer}>
         <View style={styles.blockLabelNatifee}>
-          <svg.Tag style={styles.blockImageSignal} />
+          <Tag style={styles.blockImageSignal} />
           <Text style={styles.textNatifee}>Напоминать ежедневно</Text>
         </View>
-        <View style={{}}>
+        <View>
           <Switch
             trackColor={{false: '#767577', true: '#81b0ff'}}
             thumbColor={isNotification ? '#f5dd4b' : '#f4f3f4'}
@@ -96,19 +112,16 @@ const BlockNatifee = () => {
           <Text style={styles.textLabelClock}>Время напоминания</Text>
         </View>
         <View style={styles.blockMainClock}>
-          {dateTextNotifee.length > 0 ? (
-            <TouchableOpacity onPress={() => dispatch(setStateActiveViewTime(!stateActiveViewTime))}>
-              <View style={styles.blockTextClock}>
-                <Text style={styles.textClock}>{dateTextNotifee}</Text>
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => dispatch(setStateActiveViewTime(!stateActiveViewTime))}>
-              <View style={styles.blockTextClock}>
-                <Text style={styles.textClock}>{time}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            onPress={() =>
+              dispatch(setStateActiveViewTime(!stateActiveViewTime))
+            }>
+            <View style={styles.blockTextClock}>
+              <Text style={styles.textClock}>
+                {dateTextNotifee.length > 0 ? `${dateTextNotifee}` : `${time}`}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

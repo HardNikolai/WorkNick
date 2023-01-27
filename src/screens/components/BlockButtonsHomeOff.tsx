@@ -1,9 +1,10 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {RootStackParamList} from '../../navigation/RootStackParamList';
+import {RootStackParamList} from '/navigation/RootStackParamList';
 import svg from '/assets/index_svg';
 
 const BlockButtonsHomeOff = () => {
+  const {HomeOff, UserOn} = svg;
   const navigation =
     useNavigation<
       NavigationProp<RootStackParamList, keyof RootStackParamList>
@@ -13,10 +14,10 @@ const BlockButtonsHomeOff = () => {
     <View style={styles.container}>
       <View style={styles.blockButton}>
         <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-          <svg.HomeOff width={19} height={19} />
+          <HomeOff width={19} height={19} />
         </TouchableOpacity>
         <View style={styles.blockMidle} />
-        <svg.UserOn width={19} height={19} />
+        <UserOn width={19} height={19} />
       </View>
     </View>
   );

@@ -2,15 +2,19 @@ import {Modal, StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {RootState} from 'src/redux/store';
 
-const BlockErrorServer = () => {
-  const stateErrorServer = useSelector((state: RootState) => state.state.stateErrorServer);
+const BlockError = () => {
+  const stateError = useSelector((state: RootState) => state.state.stateError);
+  const stateErrorInput = useSelector((state: RootState) => state.state.stateErrorInput);
+
   return (
     <View>
-      {stateErrorServer && (
+      {stateError && (
         <Modal transparent={true}>
           <View style={styles.container}>
             <View style={styles.blockMain}>
-              <Text style={styles.blockTextError}>Ошибка сервера</Text>
+              <Text style={styles.blockTextError}>
+                {stateErrorInput ? 'Некорректный ввод данных' : 'Ошибка сервера'}
+              </Text>
             </View>
           </View>
         </Modal>
@@ -37,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BlockErrorServer;
+export default BlockError;

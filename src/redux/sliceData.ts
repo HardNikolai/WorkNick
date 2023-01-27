@@ -32,8 +32,8 @@ const configSlice = createSlice({
     changeDateSynch(state, action) {
       const hour = action.payload.getHours();
       const minutes = action.payload.getMinutes();
-      let newHour = hour < 10 ? `0${hour}` : hour;
-      let newMinutes = minutes < 10 ? `0${minutes}` : minutes;
+      const newHour = hour < 10 ? `0${hour}` : hour;
+      const newMinutes = minutes < 10 ? `0${minutes}` : minutes;
       const time = `${newHour}:${newMinutes}`;
       state.dataTable.dateSynch = time;
     },

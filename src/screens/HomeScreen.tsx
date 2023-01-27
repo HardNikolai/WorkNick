@@ -1,28 +1,25 @@
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useEffect, useMemo} from 'react';
-import Task from './components/Task';
-import BlockErrorInput from './components/BlockErrorInput';
-import Calendar from './components/Calendar';
-import BlockButtonsHomeOn from './components/BlockButtonsHomeOn';
-import Chart from './components/Chart';
-import BlockFilter from './components/BlockFilter';
+import {useEffect} from 'react';
 import {RootState} from 'src/redux/store';
 import {useDispatch, useSelector} from 'react-redux';
-import {requestTaskGet} from '/api/requestDataUser';
+import {makeApiTask} from '/api/requestDataUser';
 import {
   changeAllData,
   changeAllDataMonth,
   changeAllDataUsers,
   changeDataExpenseNumbersInMonth,
   changeDataNumberInMonth,
-  changeDateSynch
-} from '../redux/sliceData';
-import {changeForecast, changeTotal} from '../redux/sliceBalance';
-import {changeAllCategories, changeUserCategories} from '../redux/sliceCategory';
+  changeDateSynch,
+} from '/redux/sliceData';
+import {changeForecast, changeTotal} from '/redux/sliceBalance';
+import {
+  changeAllCategories,
+  changeUserCategories,
+} from '/redux/sliceCategory';
 import {setTask} from '../redux/sliceTask';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {setToken} from '../redux/sliceUser';
-import {requestCategoryGet} from '/api/requestDataCategory';
+import {setToken} from '/redux/sliceUser';
+import {makeApiCategory} from '/api/requestDataCategory';
 import {
   forecastingBalance,
   getAllData,
@@ -33,33 +30,57 @@ import {
   getDataUserCategory,
   getDataUserInMonth,
   recalc,
-} from '../utils/utilHomeScreen';
-import InputNewTask from './components/InputNewTask';
-import ChangeTask from './components/ChangeTask';
-import BlockErrorServer from './components/BlockErrorServer';
-import {setStateErrorServer} from '../redux/stateConfig';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from 'src/navigation/RootStackParamList';
-import { IDataUser } from './interfaces/interfaces';
+} from '/utils/utilHomeScreen';
+import {setStateError, setStateErrorInput} from '/redux/stateConfig';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from 'src/navigation/RootStackParamList';
+import {IDataUser} from './interfaces/interfaces';
+import componentsHomeScreen from './components/index/componentsHomeScreen';
+import {
+  URL_CATEGORY_GET,
+  URL_TRANSATION_GET,
+} from '/constants/index';
 
 const HomeScreen = () => {
+  const {
+    Calendar,
+    Chart,
+    InputNewTask,
+    ChangeTask,
+    BlockError,
+    BlockFilter,
+    Task,
+    BlockButtonsHomeOn,
+  } = componentsHomeScreen;
+
   const navigation =
-  useNavigation<
-    NavigationProp<RootStackParamList, keyof RootStackParamList>
-  >();
+    useNavigation<
+      NavigationProp<RootStackParamList, keyof RootStackParamList>
+    >();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.dataUser.user);
-  const allDataUsers = useSelector((state: RootState) => state.table.dataTable.allDataUsers);
+  const allDataUsers = useSelector(
+    (state: RootState) => state.table.dataTable.allDataUsers,
+  );
   const stateTask = useSelector((state: RootState) => state.state.stateTask);
-  const stateAddNewTask = useSelector((state: RootState) => state.state.stateAddNewTask);
-  const dateSynch = useSelector((state: RootState) => state.table.dataTable.dateSynch);
-  const stateDeleteCategory = useSelector((state: RootState) => state.state.stateDeleteCategory);
-  const stateSaveCategory = useSelector((state: RootState) => state.state.stateSaveCategory);
+  const stateAddNewTask = useSelector(
+    (state: RootState) => state.state.stateAddNewTask,
+  );
+  const dateSynch = useSelector(
+    (state: RootState) => state.table.dataTable.dateSynch,
+  );
+  const stateDeleteCategory = useSelector(
+    (state: RootState) => state.state.stateDeleteCategory,
+  );
+  const stateSaveCategory = useSelector(
+    (state: RootState) => state.state.stateSaveCategory,
+  );
 
   const tosterErrorServer = () => {
-    dispatch(setStateErrorServer(true));
+    dispatch(setStateError(true));
+    dispatch(setStateErrorInput(false));
     setTimeout(() => {
-      dispatch(setStateErrorServer(false));
+      dispatch(setStateError(false));
     }, 2000);
   };
 
@@ -67,14 +88,13 @@ const HomeScreen = () => {
     try {
       const tokens = await GoogleSignin.getTokens();
       dispatch(setToken(tokens.accessToken));
-      const resultRequestTransaction = await requestTaskGet(tokens.accessToken);
-      const resultRequestCategory = await requestCategoryGet(
-        tokens.accessToken,
-      );
-      if (!resultRequestTransaction) {
-        return;
-      }
-      if (resultRequestTransaction.status === 200) {
+
+      const urlTrans = URL_TRANSATION_GET + `${tokens.accessToken}`;
+      const urlCategory = URL_CATEGORY_GET + `${tokens.accessToken}`;
+      const resultRequestTransaction = await makeApiTask('GET', urlTrans);
+      const resultRequestCategory = await makeApiCategory('GET', urlCategory);
+
+      if (resultRequestTransaction && resultRequestTransaction.status === 200) {
         const dataAllTable = await getAllData(
           resultRequestTransaction.data.values,
         );
@@ -89,7 +109,8 @@ const HomeScreen = () => {
         const dataUserMonth = getDataUserInMonth(dataUser);
         dispatch(changeAllDataMonth(dataUserMonth));
         dispatch(changeTotal(recalc(dataUserMonth)));
-        dispatch(changeForecast(
+        dispatch(
+          changeForecast(
             forecastingBalance(dataUserMonth, recalc(dataUserMonth)),
           ),
         );
@@ -102,20 +123,17 @@ const HomeScreen = () => {
         throw new Error();
       }
 
-      if (!resultRequestCategory) {
-        return;
-      }
-      if (resultRequestCategory.status === 200) {
+      if (resultRequestCategory && resultRequestCategory.status === 200) {
         const dataAllCategory = await getDataAllCategory(
-          resultRequestCategory.data.values
+          resultRequestCategory.data.values,
         );
         dispatch(changeDateSynch(new Date()));
         dispatch(changeAllCategories(dataAllCategory));
 
         const dataUserCategory = await getDataUserCategory(
           resultRequestCategory.data.values,
-          user.profile.email
-        )
+          user.profile.email,
+        );
         dispatch(changeUserCategories(dataUserCategory));
       } else {
         throw new Error();
@@ -128,31 +146,31 @@ const HomeScreen = () => {
   const goToFilterTask = (item: IDataUser) => {
     navigation.navigate('FilterTask');
     dispatch(setTask(item));
-  }
+  };
 
   useEffect(() => {
     upDateAllData();
-  }, []);
-
-  useMemo(() => {
-    upDateAllData();
-  }, [stateAddNewTask, stateTask, dateSynch, stateDeleteCategory, stateSaveCategory]);
+  }, [
+    stateAddNewTask,
+    stateTask,
+    dateSynch,
+    stateDeleteCategory,
+    stateSaveCategory,
+  ]);
 
   return (
     <View style={styles.container}>
       <Calendar />
       <Chart />
-      <BlockErrorInput />
-      <BlockErrorServer />
       <InputNewTask />
       <ChangeTask />
+      <BlockError />
       <BlockFilter />
       <FlatList
         data={allDataUsers}
         renderItem={({item}) => (
-          <TouchableOpacity
-            onPress={() => goToFilterTask(item)}>
-            <Task task={item}></Task>
+          <TouchableOpacity onPress={() => goToFilterTask(item)}>
+            <Task task={item} />
           </TouchableOpacity>
         )}
         keyExtractor={item => item.id}

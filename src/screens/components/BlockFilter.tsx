@@ -1,18 +1,18 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { setCategory } from '../../redux/sliceCategory';
+import { RootState } from '/redux/store';
+import { setCategory } from '/redux/sliceCategory';
 
 const BlockFilter = () => {
-  const [state, setState] = useState(false);
+  const [stateListCategory, setStateListCategory] = useState(false);
   const dispatch = useDispatch();
   const dataListCategory = useSelector((state: RootState) => state.category.dataCategories.userCategories);
 
   return (
     <View style={styles.main}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => setState(!state)}>
+        <TouchableOpacity onPress={() => setStateListCategory(!stateListCategory)}>
           <View style={styles.blockTextFilter}>
             <Text style={styles.textFilter}>Фильтр</Text>
           </View>
@@ -23,13 +23,13 @@ const BlockFilter = () => {
           </View>
         </TouchableOpacity>
       </View>
-      {state && (
+      {stateListCategory && (
         <FlatList
           data={dataListCategory}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() => {
-                setState(false);
+                setStateListCategory(false);
                 dispatch(setCategory(item.name))
               }}>
               {item.name.length > 0 && <Text style={styles.textTask}>{item.name}</Text>}

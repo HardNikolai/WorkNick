@@ -8,44 +8,56 @@ import {
   View,
 } from 'react-native';
 import svg from '/assets/index_svg';
-import {requestTaskPut} from '/api/requestDataUser';
+import {makeApiTask} from '/api/requestDataUser';
 import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+import {RootState} from '/redux/store';
 import {
   clearTask,
   setCategories,
   setNameCategory,
   setTextAbout,
   setTextCount,
-} from '../../redux/sliceTask';
+} from '/redux/sliceTask';
 import {
   setStateChangeTask,
+  setStateError,
   setStateErrorInput,
-  setStateErrorServer,
   setStateTask,
-} from '../../redux/stateConfig';
+} from '/redux/stateConfig';
+import {formingTask} from '/utils/utilInputNewTask';
+import {URL_TRANSATION} from '/constants/index';
 
 const ChangeTask = () => {
+  const {ArrowDown, ArrowDownOff, ArrowUp, ArrowUpOff, HomeOn, Off, UserOff} = svg;
   const [stateListCategory, setStateListCategory] = useState(false);
 
   const dispatch = useDispatch();
-  const dataCategories = useSelector((state: RootState) => state.category.dataCategories.userCategories);
+  const dataCategories = useSelector(
+    (state: RootState) => state.category.dataCategories.userCategories,
+  );
   const token = useSelector((state: RootState) => state.user.dataUser.token);
-  const storeTask = useSelector((state: RootState) => state.dataTask.dataTask.task);
+  const storeTask = useSelector(
+    (state: RootState) => state.dataTask.dataTask.task,
+  );
   const stateTask = useSelector((state: RootState) => state.state.stateTask);
-  const stateChangeTask = useSelector((state: RootState) => state.state.stateChangeTask);
+  const stateChangeTask = useSelector(
+    (state: RootState) => state.state.stateChangeTask,
+  );
 
   const tosterErrorInput = () => {
+    dispatch(setStateError(true));
     dispatch(setStateErrorInput(true));
     setTimeout(() => {
+      dispatch(setStateError(false));
       dispatch(setStateErrorInput(false));
     }, 2000);
   };
   const tosterErrorServer = () => {
-    setStateErrorServer(true);
+    dispatch(setStateError(true));
+    dispatch(setStateErrorInput(false));
     setTimeout(() => {
-      setStateErrorServer(false);
+      dispatch(setStateError(false));
     }, 2000);
   };
 
@@ -58,12 +70,31 @@ const ChangeTask = () => {
         tosterErrorInput();
         throw new Error();
       }
-      const res = await requestTaskPut(token, storeTask);
-      if (!res) {
-        tosterErrorServer();
-        throw new Error();
-      }
-      if (res.status === 200) {
+
+      let {id, user, nameCategories, categories, count, textAbout} = storeTask;
+
+      categories === 'TRUE' ? (categories = true) : (categories = false);
+
+      const taskRequest = formingTask(
+        Number(id),
+        user,
+        nameCategories,
+        categories,
+        count,
+        textAbout,
+      );
+      const url =
+        URL_TRANSATION +
+        `${Number(id)}` +
+        ':H' +
+        `${Number(id)}` +
+        '?access_token=' +
+        `${token}` +
+        '&valueInputOption=RAW';
+
+      const res = await makeApiTask('PUT', url, taskRequest);
+
+      if (res && res.status === 200) {
         dispatch(setStateTask(!stateTask));
       } else {
         dispatch(setStateTask(!stateTask));
@@ -88,7 +119,11 @@ const ChangeTask = () => {
                       onPress={() => {
                         dispatch(setCategories('TRUE'));
                       }}>
-                      {storeTask.categories === 'TRUE' ? <svg.ArrowDown /> : <svg.ArrowDownOff />}
+                      {storeTask.categories === 'TRUE' ? (
+                        <ArrowDown />
+                      ) : (
+                        <ArrowDownOff />
+                      )}
                     </TouchableOpacity>
                     <Text style={styles.textImageCategory}>Расход</Text>
                   </View>
@@ -97,7 +132,11 @@ const ChangeTask = () => {
                       onPress={() => {
                         dispatch(setCategories('FALSE'));
                       }}>
-                      {storeTask.categories === 'FALSE' ? <svg.ArrowUp />: <svg.ArrowUpOff />}
+                      {storeTask.categories === 'FALSE' ? (
+                        <ArrowUp />
+                      ) : (
+                        <ArrowUpOff />
+                      )}
                     </TouchableOpacity>
                     <Text style={styles.textImageCategory}>Приход</Text>
                   </View>
@@ -164,17 +203,17 @@ const ChangeTask = () => {
               </View>
             </View>
             <View style={styles.blockButton}>
-              <svg.HomeOn width={19} height={19} />
+              <HomeOn width={19} height={19} />
               <TouchableOpacity
                 onPress={() => {
                   dispatch(setStateChangeTask(false));
                   dispatch(clearTask());
                 }}>
                 <View style={styles.blockCancelButton}>
-                  <svg.Off />
+                  <Off />
                 </View>
               </TouchableOpacity>
-              <svg.UserOff width={19} height={19} />
+              <UserOff width={19} height={19} />
             </View>
           </View>
         </Modal>

@@ -1,20 +1,23 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+import {RootState} from '/redux/store';
 
 const ForecastBalance = () => {
-  const forecast = useSelector((state: RootState) => state.balance.dataBalance.forecast);
+  const forecast = useSelector(
+    (state: RootState) => state.balance.dataBalance.forecast,
+  );
   return (
     <View style={styles.main}>
       <View style={styles.container}>
         <Text style={styles.textLabelChart}>
           Прогноз баланса на конец месяца
         </Text>
-        {forecast > 0 ? (
-          <Text style={styles.textBalanceWhite}>{forecast.toFixed(2)} Р</Text>
-        ) : (
-          <Text style={styles.textBalanceRed}>{forecast.toFixed(2)} Р</Text>
-        )}
+        <Text
+          style={[
+            forecast > 0 ? styles.textBalanceWhite : styles.textBalanceRed,
+          ]}>
+          {forecast.toFixed(2)} Р
+        </Text>
       </View>
     </View>
   );

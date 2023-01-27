@@ -3,14 +3,15 @@ import ForecastBalance from './ForecastBalance';
 import Month from './Month';
 import TotalBalance from './TotalBalance';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+import {RootState} from '/redux/store';
 import svg from '/assets/index_svg';
-import {calendar} from '../../constants/indexConstants';
-import {setStateTouchDate} from '../../redux/stateConfig';
-import {changeMonth, changeYear} from '../../redux/storeData';
-import { addYear, subYear } from '../../utils/utilCalendar';
+import {CALENDAR} from '/constants/index';
+import {setStateTouchDate} from '/redux/stateConfig';
+import {changeMonth, changeYear} from '/redux/storeData';
+import { addYear, subYear } from '/utils/utilCalendar';
 
 const Calendar = () => {
+  const {ArrowLeft, ArrowRight} = svg;
   const dispatch = useDispatch();
   const year = useSelector((state: RootState) => state.data.data.year);
   const month = useSelector((state: RootState) => state.data.data.month);
@@ -43,18 +44,18 @@ const Calendar = () => {
         <View style={styles.containerOpen}>
           <View style={styles.blockMain}>
             <TouchableOpacity onPress={() => dispatch(changeYear(subYear(year)))}>
-              <svg.ArrowLeft />
+              <ArrowLeft />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => dispatch(setStateTouchDate(!stateTouchDate))}>
               <Text style={styles.textCalendar}>{year}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => dispatch(changeYear(addYear(year)))}>
-              <svg.ArrowRight />
+              <ArrowRight />
             </TouchableOpacity>
           </View>
           <FlatList
-            data={calendar}
+            data={CALENDAR}
             numColumns={3}
             renderItem={({item, index}) => (
               <Month item={item} index={index}></Month>
@@ -67,14 +68,14 @@ const Calendar = () => {
         <View>
           <View style={styles.containerClose}>
             <TouchableOpacity onPress={subtract}>
-              <svg.ArrowLeft />
+              <ArrowLeft />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => dispatch(setStateTouchDate(!stateTouchDate))}>
-              <Text style={styles.textCalendar}>{calendar[month]}</Text>
+              <Text style={styles.textCalendar}>{CALENDAR[month]}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={addition}>
-              <svg.ArrowRight />
+              <ArrowRight />
             </TouchableOpacity>
           </View>
           <View style={styles.blockTotal}>

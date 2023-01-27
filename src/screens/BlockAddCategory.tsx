@@ -1,18 +1,19 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
-import Category from './components/Category';
-import BlockErrorInput from './components/BlockErrorInput';
-import BlockAddNewCategory from './components/BlockAddNewCategory';
-import BlockButtonsBlockCategory from './components/BlockButtonsBlockCategory';
 import svg from '/assets/index_svg';
-import BlockErrorServer from './components/BlockErrorServer';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from 'src/navigation/RootStackParamList';
 import {useSelector} from 'react-redux';
 import {RootState} from 'src/redux/store';
+import componentsBlockAddCategory from './components/index/componentsBlockAddCategory';
 
 const AddCategoryExpense = () => {
-  const dataUserCategories = useSelector((state: RootState) => state.category.dataCategories.userCategories);
+  const {ArrowLeft} = svg;
+  const {Category, BlockAddNewCategory, BlockError, BlockButtonsBlockCategory} =
+    componentsBlockAddCategory;
+  const dataUserCategories = useSelector(
+    (state: RootState) => state.category.dataCategories.userCategories,
+  );
   const navigation =
     useNavigation<
       NavigationProp<RootStackParamList, keyof RootStackParamList>
@@ -25,19 +26,20 @@ const AddCategoryExpense = () => {
           <TouchableOpacity
             onPress={() => navigation.navigate('ProfileScreen')}>
             <View style={styles.innerBlockHead}>
-              <svg.ArrowLeft />
+              <ArrowLeft />
               <Text style={styles.textButtonBack}>Назад</Text>
             </View>
           </TouchableOpacity>
         </View>
       </View>
-      <BlockErrorServer />
-      <BlockErrorInput />
       <FlatList
         data={dataUserCategories}
-        renderItem={({item}) => <Category item={item} />}
+        renderItem={({item}) => (
+          <Category item={item} />
+        )}
         style={styles.blockListCategory}
       />
+      <BlockError />
       <BlockAddNewCategory />
       <BlockButtonsBlockCategory />
     </View>

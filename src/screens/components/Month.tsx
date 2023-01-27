@@ -1,8 +1,8 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { changeMonth } from '../../redux/storeData';
+import { RootState } from '/redux/store';
+import { changeMonth } from '/redux/storeData';
 import { MonthProps } from '../interfaces/interfaces';
 
 const Month = ({item, index}: MonthProps) => {

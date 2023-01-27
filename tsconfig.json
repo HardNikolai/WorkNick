@@ -6,7 +6,11 @@
     "baseUrl": ".",
     "paths": {
       "/assets/*": ["./src/assets/*"],
-      "/api/*": ["./src/api/*"]
+      "/api/*": ["./src/api/*"],
+      "/constants/*": ["./src/constants/*"],
+      "/redux/*": ["./src/redux/*"],
+      "/navigation/*": ["./src/navigation/*"],
+      "/utils/*": ["./src/utils/*"],
     },
     /* Completeness */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */

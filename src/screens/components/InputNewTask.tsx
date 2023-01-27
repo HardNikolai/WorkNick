@@ -10,18 +10,20 @@ import {
 import {useState} from 'react';
 import svg from '/assets/index_svg';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+import {RootState} from '/redux/store';
 import {
   setStateAddNewTask,
+  setStateError,
   setStateErrorInput,
-  setStateErrorServer,
   setStateListCategory,
-} from '../../redux/stateConfig';
-import {requestTaskPost} from '/api/requestDataUser';
-import {setTextListCategory} from '../../redux/sliceCategory';
-import {formingTask} from '../../utils/utilInputNewTask';
+} from '/redux/stateConfig';
+import {makeApiTask} from '/api/requestDataUser';
+import {setTextListCategory} from '/redux/sliceCategory';
+import {formingTask} from '/utils/utilInputNewTask';
+import {URL_TRANSATION_POST} from '/constants/index';
 
 const InputNewTask = () => {
+  const {ArrowDown, ArrowDownOff, ArrowUp, ArrowUpOff, HomeOn, Off, UserOff} = svg;
   const [textAmount, setTextAmount] = useState('');
   const [textAbout, setTextAbout] = useState('');
   const [stateIconExpense, setStateIconExpense] = useState(true);
@@ -29,23 +31,36 @@ const InputNewTask = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.dataUser.user);
-  const dataCategories = useSelector((state: RootState) => state.category.dataCategories.userCategories);
-  const textCategory = useSelector((state: RootState) => state.category.dataCategories.textCategory);
-  const stateAddNewTask = useSelector((state: RootState) => state.state.stateAddNewTask);
-  const stateListCategory = useSelector((state: RootState) => state.state.stateListCategory);
-  const allData = useSelector((state: RootState) => state.table.dataTable.allData);
+  const dataCategories = useSelector(
+    (state: RootState) => state.category.dataCategories.userCategories,
+  );
+  const textCategory = useSelector(
+    (state: RootState) => state.category.dataCategories.textCategory,
+  );
+  const stateAddNewTask = useSelector(
+    (state: RootState) => state.state.stateAddNewTask,
+  );
+  const stateListCategory = useSelector(
+    (state: RootState) => state.state.stateListCategory,
+  );
+  const allData = useSelector(
+    (state: RootState) => state.table.dataTable.allData,
+  );
   const token = useSelector((state: RootState) => state.user.dataUser.token);
 
   const tosterErrorInput = () => {
+    dispatch(setStateError(true));
     dispatch(setStateErrorInput(true));
     setTimeout(() => {
+      dispatch(setStateError(false));
       dispatch(setStateErrorInput(false));
     }, 2000);
   };
   const tosterErrorServer = () => {
-    dispatch(setStateErrorServer(true));
+    dispatch(setStateError(true));
+    dispatch(setStateErrorInput(false));
     setTimeout(() => {
-      dispatch(setStateErrorServer(false));
+      dispatch(setStateError(false));
     }, 2000);
   };
 
@@ -57,9 +72,17 @@ const InputNewTask = () => {
     count: string,
     textAbout: string,
   ) => {
-    const task = formingTask(id, user, nameCategory, category, count, textAbout);
+    const task = formingTask(
+      id,
+      user,
+      nameCategory,
+      category,
+      count,
+      textAbout,
+    );
     try {
-      await requestTaskPost(token, task);
+      const url = URL_TRANSATION_POST + `${token}` + '&valueInputOption=RAW';
+      await makeApiTask('POST', url, task);
       dispatch(setTextListCategory('Выберете категорию'));
       setTextAbout('');
       setTextAmount('');
@@ -103,7 +126,7 @@ const InputNewTask = () => {
   const changeStateIcon = () => {
     setStateIconExpense(!stateIconExpense);
     setStateIconAddition(!stateIconAddition);
-  }
+  };
 
   return (
     <View>
@@ -113,17 +136,19 @@ const InputNewTask = () => {
             <View style={styles.blockAddNewTask}>
               <View style={styles.blockMainAddNewTask}>
                 <View style={styles.blockImageCategoryTransaction}>
-                  <TouchableOpacity
-                    onPress={() => changeStateIcon()}>
+                  <TouchableOpacity onPress={() => changeStateIcon()}>
                     <View style={styles.blockMainImageCategory}>
-                      {stateIconExpense ? <svg.ArrowDown />: <svg.ArrowDownOff />}
+                      {stateIconExpense ? (
+                        <ArrowDown />
+                      ) : (
+                        <ArrowDownOff />
+                      )}
                       <Text style={styles.textImageCategory}>Расход</Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => changeStateIcon()}>
+                  <TouchableOpacity onPress={() => changeStateIcon()}>
                     <View style={styles.blockMainImageCategory}>
-                      {stateIconAddition ? <svg.ArrowUp /> : <svg.ArrowUpOff />}
+                      {stateIconAddition ? <ArrowUp /> : <ArrowUpOff />}
                       <Text style={styles.textImageCategory}>Приход</Text>
                     </View>
                   </TouchableOpacity>
@@ -192,14 +217,14 @@ const InputNewTask = () => {
               </View>
             </View>
             <View style={styles.blockButton}>
-              <svg.HomeOn width={19} height={19} />
+              <HomeOn width={19} height={19} />
               <TouchableOpacity
                 onPress={() => dispatch(setStateAddNewTask(!stateAddNewTask))}>
                 <View style={styles.blockCancelButton}>
-                  <svg.Off />
+                  <Off />
                 </View>
               </TouchableOpacity>
-              <svg.UserOff width={19} height={19} />
+              <UserOff width={19} height={19} />
             </View>
           </View>
         </Modal>

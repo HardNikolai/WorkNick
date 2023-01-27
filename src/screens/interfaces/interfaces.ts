@@ -52,7 +52,7 @@ export interface ITask {
   id: string;
   user: string;
   nameCategories: string;
-  categories: string;
+  categories: string | boolean;
   count: string;
   textAbout: string;
   date: string;
@@ -87,4 +87,25 @@ export interface Iconfig {
   isStateCalculation: boolean;
   dateTextNotifee: string;
   dateNotifee: Date;
+}
+
+export interface Istate {
+  stateTouchDate: boolean;
+  stateAddNewTask: boolean;
+  stateCategoryImageExpense: boolean;
+  stateCategoryImageAddition: boolean;
+  stateListCategory: boolean;
+  stateErrorInput: boolean;
+  stateChangeTask: boolean;
+  stateAddNewCategory: boolean;
+  stateSaveCategory: boolean;
+  stateDeleteCategory: boolean;
+  stateChangeCalendar: boolean;
+  stateActiveViewTime: boolean;
+  stateNotification: boolean;
+  stateActiveChart: boolean;
+  stateTextLength: boolean;
+  stateActiveViewFilter: boolean;
+  stateError: boolean;
+  stateTask: boolean
 }

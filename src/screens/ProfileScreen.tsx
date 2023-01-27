@@ -1,18 +1,24 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import BlockProfile from './components/BlockProfile';
-import BlockNatifee from './components/BlockNatifee';
-import BlockCalculation from './components/BlockCalculation';
-import BlockButtonsHomeOff from './components/BlockButtonsHomeOff';
-import BlockInstallTime from './components/BlockInstallTime';
-import BlockSynchronization from './components/BlockSynchronization';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from 'src/navigation/RootStackParamList';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from 'src/navigation/RootStackParamList';
+import componentsProfileScreen from './components/index/componentsProfileScreen';
 
 const ProfileScreen = () => {
+  const {
+    BlockProfile,
+    BlockNatifee,
+    BlockCalculation,
+    BlockInstallTime,
+    BlockError,
+    BlockSynchronization,
+    BlockButtonsHomeOff,
+  } = componentsProfileScreen;
+
   const navigation =
-  useNavigation<
-    NavigationProp<RootStackParamList, keyof RootStackParamList>
-  >();
+    useNavigation<
+      NavigationProp<RootStackParamList, keyof RootStackParamList>
+    >();
+    
   return (
     <View style={styles.container}>
       <View style={styles.blockInnerContainer}>
@@ -21,7 +27,8 @@ const ProfileScreen = () => {
           <BlockNatifee />
           <BlockCalculation />
           <BlockInstallTime />
-          <TouchableOpacity onPress={() => navigation.navigate('AddCatExpense')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AddCatExpense')}>
             <View style={styles.blockButtonAddCategory}>
               <Text style={styles.textButtonAddCategory}>
                 Добавить категорию расходов
@@ -31,6 +38,7 @@ const ProfileScreen = () => {
         </View>
         <BlockSynchronization />
       </View>
+      <BlockError />
       <BlockButtonsHomeOff />
     </View>
   );

@@ -8,14 +8,15 @@ import {
 import BlockButtonsHomeOn from './components/BlockButtonsHomeOn';
 import OneTaskFilter from './components/OneTaskFilter';
 import svg from '/assets/index_svg';
-import { HEIGHT } from '../constants/indexConstants';
+import { HEIGHT } from '/constants/index';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from 'src/navigation/RootStackParamList';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { clearTask } from '../redux/sliceTask';
+import { RootState } from '/redux/store';
+import { clearTask } from '/redux/sliceTask';
 
 const FilterTask = () => {
+  const {ArrowLeft} = svg;
   const navigation =
   useNavigation<
     NavigationProp<RootStackParamList, keyof RootStackParamList>
@@ -38,7 +39,7 @@ const FilterTask = () => {
               goToBack()
             }}>
             <View style={styles.blockButtonHeader}>
-              <svg.ArrowLeft />
+              <ArrowLeft />
               <Text style={styles.textButtonBack}>Назад</Text>
             </View>
           </TouchableOpacity>

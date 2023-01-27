@@ -1,13 +1,14 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import svg from '/assets/index_svg';
-import {HEIGHT} from '../../constants/indexConstants';
+import {HEIGHT} from '/constants/index';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
-import {setStateTextLength} from '../../redux/stateConfig';
+import {RootState} from '/redux/store';
+import {setStateTextLength} from '/redux/stateConfig';
 import { IPropsTask } from '../interfaces/interfaces';
 
 const OneTaskFilter = (props: IPropsTask) => {
   const {task} = props;
+  const {ArrowDown, ArrowUp, ArrowRight} = svg;
 
   const dispatch = useDispatch();
   const stateTextLength = useSelector((state: RootState) => state.state.stateTextLength);
@@ -29,29 +30,19 @@ const OneTaskFilter = (props: IPropsTask) => {
         <View style={styles.container}>
           <View style={styles.mainContainer}>
             <View style={styles.leftBlockContainer}>
-              {task.categories === 'TRUE' ? <svg.ArrowDown /> : <svg.ArrowUp />}
+              {task.categories === 'TRUE' ? <ArrowDown /> : <ArrowUp />}
               <View style={styles.blockDataTask}>
                 <View style={styles.blockMainDataTask}>
-                  {checkArrow ? (
-                    <Text style={styles.textAboutTask}>{task.textAbout}</Text>
-                  ) : (
-                    <Text numberOfLines={1} style={styles.textAboutTask}>
-                      {task.textAbout}
-                    </Text>
-                  )}
+                    <Text numberOfLines={Number(checkArrow)} style={styles.textAboutTask}>{task.textAbout}</Text>
                 </View>
-                {task.categories === 'TRUE' ? (
-                  <Text style={styles.textPriceRed}>{task.count} Р</Text>
-                ) : (
-                  <Text style={styles.textPriceGreen}>{task.count} Р</Text>
-                )}
+                  <Text style={[task.categories === 'TRUE' ? styles.textPriceRed : styles.textPriceGreen]}>{task.count} Р</Text>
               </View>
               {task.textAbout.length > 10 && (
                 <TouchableOpacity
                   onPress={() => {
                     dispatch(setStateTextLength(!stateTextLength));
                   }}>
-                  <svg.ArrowRight width={15} height={15} />
+                  <ArrowRight width={15} height={15} />
                 </TouchableOpacity>
               )}
             </View>

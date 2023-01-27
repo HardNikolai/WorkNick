@@ -7,49 +7,56 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {URL_CATEGORY_POST} from '/constants/index';
 import {
   setStateAddCategory,
+  setStateError,
   setStateErrorInput,
-  setStateErrorServer,
   setStateSaveCategory,
 } from '../../redux/stateConfig';
-import {RootState} from '../../redux/store';
-import {requestCategoryPost} from '/api/requestDataCategory';
+import {RootState} from '/redux/store';
+import {makeApiCategory} from '/api/requestDataCategory';
 
 const BlockAddNewCategory = () => {
   const dispatch = useDispatch();
   const [textInput, setTextInput] = useState('');
 
-  const stateAddNewCategory = useSelector((state: RootState) => state.state.stateAddNewCategory);
-  const stateSaveCategory = useSelector((state: RootState) => state.state.stateSaveCategory);
+  const stateAddNewCategory = useSelector(
+    (state: RootState) => state.state.stateAddNewCategory,
+  );
+  const stateSaveCategory = useSelector(
+    (state: RootState) => state.state.stateSaveCategory,
+  );
   const user = useSelector((state: RootState) => state.user.dataUser.user);
   const token = useSelector((state: RootState) => state.user.dataUser.token);
 
   const tosterErrorInput = () => {
+    dispatch(setStateError(true));
     dispatch(setStateErrorInput(true));
     setTimeout(() => {
+      dispatch(setStateError(true));
       dispatch(setStateErrorInput(false));
     }, 2000);
   };
+
   const tosterErrorServer = () => {
-    dispatch(setStateErrorServer(true));
+    dispatch(setStateError(true));
+    dispatch(setStateErrorInput(false));
     setTimeout(() => {
-      dispatch(setStateErrorServer(false));
+      dispatch(setStateError(true));
     }, 2000);
-  };
+  }
 
   const addCategory = async (nameCategory: string) => {
     try {
       if (nameCategory.length > 0) {
-        const resPostRequest = await requestCategoryPost(
-          token,
+        const url = URL_CATEGORY_POST + `${token}` + '&valueInputOption=RAW';
+        const resPostRequest = await makeApiCategory('POST', url, [
           nameCategory,
           user.profile.email,
-        );
-        if (!resPostRequest) {
-          return;
-        }
-        if (resPostRequest.status === 200) {
+        ]);
+        
+        if (resPostRequest && resPostRequest.status === 200) {
           dispatch(setStateSaveCategory(!stateSaveCategory));
           return 200;
         } else {
